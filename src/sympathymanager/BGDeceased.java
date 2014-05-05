@@ -1,0 +1,116 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package sympathymanager;
+
+/**
+ *
+ * @author Charlie
+ */
+public class BGDeceased implements Deceased {
+    private String firstName;
+    private String lastName;
+    private String mInitial;
+    private String town;
+    public BGDeceased()
+    {
+        firstName = null;
+        lastName = null;
+        mInitial = null;
+        town = null;
+
+    }
+
+    public BGDeceased(String name)
+    {
+
+        String delims = "[, ]";
+       String[] allNames = name.split(delims);
+       setLName(allNames[0]);
+       setFname(allNames[2]);
+       if (allNames.length >=4)
+       {
+           setMI(allNames[3]);
+       }
+       else
+           setMI(null);
+       town =  null;
+    }
+
+    public BGDeceased(String first, String last, String MI)
+    {
+        firstName = first;
+        lastName = last;
+        mInitial = MI;
+
+
+    }
+
+    public void setLName(String name)
+    {
+        lastName = name;
+    }
+
+    public String getLName()
+    {
+        return lastName;
+    }
+
+    public void setFname(String name)
+    {
+//       String delims = "[, ]";
+//       String[] allNames = name.split(delims);
+//       String fName = allNames[2];
+//       firstName = fName;
+        firstName = name;
+    }
+
+    public String getFname()
+    {
+        return firstName;
+    }
+
+
+    public void setMI(String name)
+    {
+//       String delims = "[, .]";
+//       String[] allNames = name.split(delims);
+//       if(allNames.length >=4 )
+//       {
+//            String initial = allNames[3];
+//            mInitial = initial;
+//       }
+//       else
+//           mInitial = null;
+        mInitial = name;
+
+    }
+
+    public String getMI()
+    {
+        return mInitial;
+    }
+
+     public void setTown(String towns)
+     {
+         town = towns;
+     }
+
+     public String getTown()
+     {
+         return town;
+     }
+    public void display()
+    {
+        System.out.printf("%s|%s|%s\n", firstName, mInitial, lastName);
+
+    }
+
+    public String toString()
+    {
+        return String.format("%s|%s|%s| %s\n", firstName, mInitial, lastName, town);
+    }
+
+}
