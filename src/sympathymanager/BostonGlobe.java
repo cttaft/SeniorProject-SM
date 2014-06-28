@@ -52,6 +52,7 @@ public class BostonGlobe implements ConnectToPaper
         for( Deceased dead: DeceasedList)
         {
             dead.setTown(getTowns(DeceasedList.indexOf(dead)));
+            dead.setURL(URLlist.get(DeceasedList.indexOf(dead)));
         }
 
         return DeceasedList;

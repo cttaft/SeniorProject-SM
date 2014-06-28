@@ -14,6 +14,7 @@ public class BGDeceased implements Deceased {
     private String lastName;
     private String mInitial;
     private String town;
+    private String URL;
     public BGDeceased()
     {
         firstName = null;
@@ -98,6 +99,11 @@ public class BGDeceased implements Deceased {
          town = towns;
      }
 
+     public void setURL(String url)
+     {
+         URL = url;
+     }
+
      public String getTown()
      {
          return town;
@@ -110,7 +116,7 @@ public class BGDeceased implements Deceased {
 
     public String toString()
     {
-        return String.format("%s|%s|%s| %s\n", firstName, mInitial, lastName, town);
+        return String.format("%s|%s|%s|%s|%s\n", firstName, mInitial, lastName, town, URL);
     }
 
 }

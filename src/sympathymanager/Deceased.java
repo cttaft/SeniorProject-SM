@@ -19,5 +19,6 @@ public interface Deceased {
        public String getLName();
        public void setTown(String towns);
        public void display();
-       
+       public void setURL(String url);
+
 }
