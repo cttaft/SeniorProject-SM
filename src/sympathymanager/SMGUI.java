@@ -18,7 +18,6 @@ import org.jsoup.*;
 
 import java.net.URL;
 
-
 /**
  *
  * @author Charlie
@@ -28,9 +27,9 @@ public class SMGUI extends javax.swing.JFrame
     Connection connection;
     MySqlConnection database = new MySqlConnection();
     ArrayList<String> PictureList = new ArrayList<>();
-     ArrayList<Deceased> databaseList = new ArrayList<>();
-       ArrayList<Deceased> jSoupList = new ArrayList<>();
-       ArrayList<Deceased> finalList = new ArrayList<>();
+    ArrayList<Deceased> databaseList = new ArrayList<>();
+    ArrayList<Deceased> jSoupList = new ArrayList<>();
+    ArrayList<Deceased> finalList = new ArrayList<>();
 
     /** Creates new form SMGUI */
     public SMGUI()
@@ -177,7 +176,7 @@ public class SMGUI extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton1ActionPerformed
 
 
-      jProgressBar1.setIndeterminate(true);
+        jProgressBar1.setIndeterminate(true);
         BostonGlobe bc = new BostonGlobe();
         connection = bc.jsoupConnection();
 
@@ -187,18 +186,20 @@ public class SMGUI extends javax.swing.JFrame
         try
         {
 
-        databaseList =  database.readDataBase();
-        jList2.setListData(databaseList.toArray());
+            databaseList = database.readDataBase();
+            jList2.setListData(databaseList.toArray());
 
-        }catch(Exception e)
+        }
+        catch ( Exception e )
         {
             jTextField1.setText(e.toString());
         }
         jList1.setListData(jSoupList.toArray());
-          jProgressBar1.setIndeterminate(false);
-         jList1.setSelectedIndex(0);
-         jList1.setToolTipText(String.format("%s", jSoupList.get(jList1.getSelectedIndex()).getFname()));
-         jList1.setCellRenderer(new MyCellRenderer());
+        jProgressBar1.setIndeterminate(false);
+        jList1.setSelectedIndex(0);
+        jList1.setToolTipText(String.format("%s", jSoupList.get(jList1.getSelectedIndex()).
+          getFname()));
+        jList1.setCellRenderer(new MyCellRenderer());
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -211,12 +212,12 @@ public class SMGUI extends javax.swing.JFrame
 
         try
         {
-             URL where = new URL((bc.getPictures(jList1.getSelectedIndex())));
-             ImageIcon picture = new ImageIcon(where);
-             jLabel2.setIcon(picture);
-             jTextField1.setEditable(false);
+            URL where = new URL(( bc.getPictures(jList1.getSelectedIndex()) ));
+            ImageIcon picture = new ImageIcon(where);
+            jLabel2.setIcon(picture);
+            jTextField1.setEditable(false);
         }
-        catch( Exception e)
+        catch ( Exception e )
         {
             jTextField1.setText("Error Fetching");
         }
@@ -227,9 +228,7 @@ public class SMGUI extends javax.swing.JFrame
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jTextField1ActionPerformed
     {//GEN-HEADEREND:event_jTextField1ActionPerformed
-
     }//GEN-LAST:event_jTextField1ActionPerformed
-
 
     /**
      * @param args the command line arguments
@@ -300,33 +299,40 @@ public class SMGUI extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
- class MyCellRenderer extends JLabel implements ListCellRenderer<Object>
- {
-      public Component getListCellRendererComponent(
-       JList<?> list,           // the list
-       Object value,            // value to display
-       int index,               // cell index
-       boolean isSelected,      // is the cell selected
-       boolean cellHasFocus)    // does the cell have focus
-     {
-         String s = value.toString();
-         setText(s);
 
-         if (isSelected) {
-             setToolTipText(String.format("Get Info About %s from %s", jSoupList.get(index).getFname(), jSoupList.get(index).getTown()));
-             setBackground(list.getSelectionBackground());
-             setForeground(list.getSelectionForeground());
-         } else {
-               setForeground(Color.GREEN);
-             setBackground(list.getBackground());
+    class MyCellRenderer extends JLabel implements ListCellRenderer<Object>
+    {
+        public Component getListCellRendererComponent(
+          JList<?> list, // the list
+          Object value, // value to display
+          int index, // cell index
+          boolean isSelected, // is the cell selected
+          boolean cellHasFocus )    // does the cell have focus
+        {
+            String s = value.toString();
+            setText(s);
 
-         }
-         setEnabled(list.isEnabled());
-         setFont(list.getFont());
-         setOpaque(true);
-         return this;
-     }
+            if ( isSelected )
+            {
+                setToolTipText(String.format("Get Info About %s from %s", jSoupList.get(index).
+                  getFname(), jSoupList.get(index).getTown()));
+                setBackground(list.getSelectionBackground());
+                setForeground(list.getSelectionForeground());
 
-      
- }
- }
+                if(jSoupList.get(index).getLikelihood() != 0 )
+                   setForeground(Color.GREEN);
+                
+            }
+            else
+            {
+
+                setBackground(list.getBackground());
+
+            }
+            setEnabled(list.isEnabled());
+            setFont(list.getFont());
+            setOpaque(true);
+            return this;
+        }
+    }
+}

@@ -79,18 +79,24 @@ public class MySqlConnection
         }
     }
 
-    public ArrayList<Deceased> findMatches( Deceased person )
+    public Deceased findMatch( Deceased person )
     {
       try
         {
-            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where FirstName = ? and LastName = ?";
+            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where FirstName LIKE ? and LastName LIKE ?";
             preparedStatement = connect.prepareStatement(nameSQL);
             preparedStatement.setString(1, person.getFname());
             preparedStatement.setString(2, person.getLName());
             resultSet = preparedStatement
               .executeQuery();
-            writeResultSet(resultSet);
-
+            if(!resultSet.next())
+            {
+              person.setLikelihood(0);
+            }
+            else
+            {
+                person.setLikelihood(1);
+            }
         }
         catch ( Exception e )
         {
@@ -101,7 +107,7 @@ public class MySqlConnection
             close();
         }
 
-        return dataDeathList;
+        return person;
 
 
     }

@@ -2,45 +2,51 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package sympathymanager;
+
 
 /**
  *
  * @author Charlie
  */
-public class BGDeceased implements Deceased {
+public class BGDeceased implements Deceased
+{
     private String firstName;
     private String lastName;
     private String mInitial;
     private String town;
     private String URL;
+    private int likelihood;
+
     public BGDeceased()
     {
         firstName = null;
         lastName = null;
         mInitial = null;
         town = null;
+        likelihood = 0;
 
     }
 
-    public BGDeceased(String name)
+    public BGDeceased( String name )
     {
 
         String delims = "[, ]";
-       String[] allNames = name.split(delims);
-       setLName(allNames[0]);
-       setFname(allNames[2]);
-       if (allNames.length >=4)
-       {
-           setMI(allNames[3]);
-       }
-       else
-           setMI(null);
-       town =  null;
+        String[] allNames = name.split(delims);
+        setLName(allNames[0]);
+        setFname(allNames[2]);
+        if ( allNames.length >= 4 )
+        {
+            setMI(allNames[3]);
+        }
+        else
+        {
+            setMI(null);
+        }
+        town = null;
     }
 
-    public BGDeceased(String first, String last, String MI)
+    public BGDeceased( String first, String last, String MI )
     {
         firstName = first;
         lastName = last;
@@ -49,7 +55,7 @@ public class BGDeceased implements Deceased {
 
     }
 
-    public void setLName(String name)
+    public void setLName( String name )
     {
         lastName = name;
     }
@@ -59,7 +65,7 @@ public class BGDeceased implements Deceased {
         return lastName;
     }
 
-    public void setFname(String name)
+    public void setFname( String name )
     {
 //       String delims = "[, ]";
 //       String[] allNames = name.split(delims);
@@ -73,8 +79,7 @@ public class BGDeceased implements Deceased {
         return firstName;
     }
 
-
-    public void setMI(String name)
+    public void setMI( String name )
     {
 //       String delims = "[, .]";
 //       String[] allNames = name.split(delims);
@@ -94,20 +99,30 @@ public class BGDeceased implements Deceased {
         return mInitial;
     }
 
-     public void setTown(String towns)
-     {
-         town = towns;
-     }
+    public void setTown( String towns )
+    {
+        town = towns;
+    }
 
-     public void setURL(String url)
-     {
-         URL = url;
-     }
+    public void setURL( String url )
+    {
+        URL = url;
+    }
 
-     public String getTown()
-     {
-         return town;
-     }
+    public String getTown()
+    {
+        return town;
+    }
+
+    public void setLikelihood( int like )
+    {
+        likelihood = like;
+    }
+    public int getLikelihood()
+    {
+        return likelihood;
+    }
+
     public void display()
     {
         System.out.printf("%s|%s|%s\n", firstName, mInitial, lastName);
@@ -118,5 +133,4 @@ public class BGDeceased implements Deceased {
     {
         return String.format("%s|%s|%s|\n", firstName, mInitial, lastName);
     }
-
 }

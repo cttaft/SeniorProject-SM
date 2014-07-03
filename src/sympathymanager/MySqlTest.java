@@ -15,7 +15,7 @@ public class MySqlTest {
     {
         MySqlConnection msc = new MySqlConnection();
         try{
-          System.out.println(msc.findMatches(new BGDeceased("Paul", "Baglio", "J")));
+          System.out.println(msc.findMatch(new BGDeceased("Paul", "Baglio", "J")));
 
         }
         catch(Exception e )

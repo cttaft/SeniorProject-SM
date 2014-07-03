@@ -23,7 +23,7 @@ public class BostonGlobe implements ConnectToPaper
     private Elements obitNames;
     private ArrayList<Deceased> DeceasedList = new ArrayList<Deceased>();
     ArrayList<String> URLlist = new ArrayList<String>();
-
+    MySqlConnection msc;
     public Connection jsoupConnection()
     {
         try
@@ -42,8 +42,9 @@ public class BostonGlobe implements ConnectToPaper
 
     public ArrayList<Deceased> getNames()
     {
+        msc = new MySqlConnection();
         obitNames = doc.select("span[class=Name");
-
+        ArrayList<Deceased> MatchList = new ArrayList<>();
         for ( int count = 0; count < obitNames.size(); count++ )
         {
             DeceasedList.add(new BGDeceased(obitNames.get(count).text()));
@@ -54,8 +55,11 @@ public class BostonGlobe implements ConnectToPaper
             dead.setTown(getTowns(DeceasedList.indexOf(dead)));
             dead.setURL(URLlist.get(DeceasedList.indexOf(dead)));
         }
-
-        return DeceasedList;
+        for(Deceased dead: DeceasedList)
+        {
+            MatchList.add(msc.findMatch(dead));
+        }
+        return MatchList;
     }
 
     public ArrayList<String> getURLS()
