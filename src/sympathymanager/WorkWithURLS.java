@@ -47,8 +47,9 @@ public class WorkWithURLS
         String town = "";
 
 
-        town = doc.select("span[itemprop=addressLocality").text();
-
+        if(doc.select("span[itemprop=addressLocality").text()!=null)
+            town = doc.select("span[itemprop=addressLocality").text() ;
+        
         return town.split(" ")[0];
     }
 }

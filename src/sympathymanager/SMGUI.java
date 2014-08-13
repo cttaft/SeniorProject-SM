@@ -314,14 +314,14 @@ public class SMGUI extends javax.swing.JFrame
 
             if ( isSelected )
             {
-                setToolTipText(String.format("Get Info About %s from %s", jSoupList.get(index).
-                  getFname(), jSoupList.get(index).getTown()));
+                setToolTipText(String.format("%s has a likelihood of %d", jSoupList.get(index).
+                  getFname(), jSoupList.get(index).getLikelihood()));
                 setBackground(list.getSelectionBackground());
                 setForeground(list.getSelectionForeground());
 
                 if(jSoupList.get(index).getLikelihood() != 0 )
                    setForeground(Color.GREEN);
-                
+
             }
             else
             {

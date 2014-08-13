@@ -83,10 +83,10 @@ public class MySqlConnection
     {
       try
         {
-            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where FirstName LIKE ? and LastName LIKE ?";
+            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName)  LIKE ? and LOWER(LastName) LIKE ?";
             preparedStatement = connect.prepareStatement(nameSQL);
-            preparedStatement.setString(1, person.getFname());
-            preparedStatement.setString(2, person.getLName());
+            preparedStatement.setString(1, person.getFname().toLowerCase());
+            preparedStatement.setString(2, person.getLName().toLowerCase());
             resultSet = preparedStatement
               .executeQuery();
             if(!resultSet.next())
@@ -96,6 +96,18 @@ public class MySqlConnection
             else
             {
                 person.setLikelihood(1);
+                String middleNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName) LIKE ? and LOWER(LastName) COLLATE UTF8_GENERAL_CI LIKE ? and LOWER(MiddleInitial) LIKE ?";
+                preparedStatement = connect.prepareStatement(middleNameSQL);
+                preparedStatement.setString(1, person.getFname().toLowerCase());
+                preparedStatement.setString(2, person.getLName().toLowerCase());
+                preparedStatement.setString(3, person.getMI().toLowerCase());
+                resultSet = preparedStatement
+              .executeQuery();
+               if (resultSet.next())
+               {
+                   person.setLikelihood(2);
+               }
+
             }
         }
         catch ( Exception e )
