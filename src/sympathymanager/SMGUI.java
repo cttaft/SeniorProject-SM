@@ -177,11 +177,45 @@ public class SMGUI extends javax.swing.JFrame
 
 
         jProgressBar1.setIndeterminate(true);
-        BostonGlobe bc = new BostonGlobe();
-        connection = bc.jsoupConnection();
+        SwingWorker worker = new SwingWorker<ArrayList<Deceased>, Void>()
+        {
+            @Override
+            public ArrayList<Deceased> doInBackground()
+            {
+                BostonGlobe bc = new BostonGlobe();
+                connection = bc.jsoupConnection();
+                return bc.getNames();
+            }
 
-        jProgressBar1.setIndeterminate(true);
-        jSoupList = bc.getNames();
+            @Override
+            public void done()
+            {
+                try
+                {
+                    jSoupList = get();
+                    jList1.setListData(jSoupList.toArray());
+                    jProgressBar1.setIndeterminate(false);
+                    jList1.setSelectedIndex(0);
+                    jList1.setToolTipText(String.format("%s", jSoupList.get(jList1.
+                      getSelectedIndex()).
+                      getFname()));
+                    jList1.setCellRenderer(new MyCellRenderer());
+
+                }
+                catch ( InterruptedException ignore )
+                {
+                }
+                catch ( java.util.concurrent.ExecutionException e )
+                {
+                    System.err.println("Error");
+                }
+
+            }
+        };
+        worker.execute();
+
+
+
 
         try
         {
@@ -194,12 +228,7 @@ public class SMGUI extends javax.swing.JFrame
         {
             jTextField1.setText(e.toString());
         }
-        jList1.setListData(jSoupList.toArray());
-        jProgressBar1.setIndeterminate(false);
-        jList1.setSelectedIndex(0);
-        jList1.setToolTipText(String.format("%s", jSoupList.get(jList1.getSelectedIndex()).
-          getFname()));
-        jList1.setCellRenderer(new MyCellRenderer());
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -319,8 +348,10 @@ public class SMGUI extends javax.swing.JFrame
                 setBackground(list.getSelectionBackground());
                 setForeground(list.getSelectionForeground());
 
-                if(jSoupList.get(index).getLikelihood() != 0 )
-                   setForeground(Color.GREEN);
+                if ( jSoupList.get(index).getLikelihood() != 0 )
+                {
+                    setForeground(Color.GREEN);
+                }
 
             }
             else
