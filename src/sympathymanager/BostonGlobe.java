@@ -22,8 +22,8 @@ public class BostonGlobe implements ConnectToPaper
     private Document doc;
     private Elements obitNames;
     private ArrayList<Deceased> DeceasedList = new ArrayList<Deceased>();
-    ArrayList<String> URLlist = new ArrayList<String>();
-    MySqlConnection msc;
+    private ArrayList<String> URLlist = new ArrayList<String>();
+    private MySqlConnection msc;
     public Connection jsoupConnection()
     {
         try
@@ -54,10 +54,16 @@ public class BostonGlobe implements ConnectToPaper
         {
             dead.setTown(getTowns(DeceasedList.indexOf(dead)));
             dead.setURL(URLlist.get(DeceasedList.indexOf(dead)));
+            dead.setPicture(getPictures(dead.getURL()));
         }
         for(Deceased dead: DeceasedList)
         {
-            MatchList.add(msc.findMatch(dead));
+            Deceased thisDead = msc.findMatch(dead);
+            if (thisDead.getLikelihood() > 0)
+            {
+                MatchList.add(thisDead);
+            }
+
         }
         return MatchList;
     }
@@ -93,12 +99,12 @@ public class BostonGlobe implements ConnectToPaper
         return picURLlist;
     }
 
-    public String getPictures( int index )
+    public String getPictures( String url )
     {
 
         String picture;
 
-        WorkWithURLS wwu = new WorkWithURLS(URLlist.get(index));
+        WorkWithURLS wwu = new WorkWithURLS(url);
 
 
         picture = wwu.getPicture();

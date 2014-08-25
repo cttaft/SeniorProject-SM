@@ -21,6 +21,9 @@ public interface Deceased {
        public String getTown();
        public void display();
        public void setURL(String url);
+       public String getURL();
+        public void setPicture(String url);
+       public String getPicture();
        public void setLikelihood(int like);
        public int getLikelihood();
 

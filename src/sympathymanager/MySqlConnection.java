@@ -24,21 +24,26 @@ public class MySqlConnection
     private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-    ArrayList<Deceased> dataDeathList = new ArrayList<Deceased>();
+    private ArrayList<Deceased> dataDeathList = new ArrayList<Deceased>();
+    private ArrayList<Deceased> matchingDBList = new ArrayList<>();
+
     public MySqlConnection()
-      {
-          try{
-           //this will load the MySQL driver, each DB has its own driver
+    {
+        try
+        {
+            //this will load the MySQL driver, each DB has its own driver
             Class.forName("com.mysql.jdbc.Driver");
             // setup the connection with the DB.
             connect = DriverManager
               .getConnection("jdbc:mysql://localhost/deathchecker?" +
               "user=cttaft&password=thomas22");
-          }catch(Exception e)
-          {
-              e.toString();
-          }
-      }
+        }
+        catch ( Exception e )
+        {
+            e.toString();
+        }
+    }
+
     public ArrayList<Deceased> readDataBase() throws Exception
     {
         try
@@ -81,7 +86,7 @@ public class MySqlConnection
 
     public Deceased findMatch( Deceased person )
     {
-      try
+        try
         {
             String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName)  LIKE ? and LOWER(LastName) LIKE ?";
             preparedStatement = connect.prepareStatement(nameSQL);
@@ -89,9 +94,10 @@ public class MySqlConnection
             preparedStatement.setString(2, person.getLName().toLowerCase());
             resultSet = preparedStatement
               .executeQuery();
-            if(!resultSet.next())
+            if ( !resultSet.next() )
             {
-              person.setLikelihood(0);
+                person.setLikelihood(0);
+                return person;
             }
             else
             {
@@ -102,11 +108,40 @@ public class MySqlConnection
                 preparedStatement.setString(2, person.getLName().toLowerCase());
                 preparedStatement.setString(3, person.getMI().toLowerCase());
                 resultSet = preparedStatement
-              .executeQuery();
-               if (resultSet.next())
-               {
-                   person.setLikelihood(2);
-               }
+                  .executeQuery();
+                if ( resultSet.next() )
+                {
+                    person.setLikelihood(2);
+                    String townNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName) LIKE ? and LOWER(LastName) LIKE ? and Lower(middleInitial) LIKE ? and LOWER(Town) LIKE ?";
+                    preparedStatement = connect.prepareStatement(townNameSQL);
+                    preparedStatement.setString(1, person.getFname().toLowerCase());
+                    preparedStatement.setString(2, person.getLName().toLowerCase());
+                    preparedStatement.setString(3, person.getMI().toLowerCase());
+                    preparedStatement.setString(4, person.getTown().toLowerCase());
+                    resultSet = preparedStatement
+                      .executeQuery();
+                    if ( resultSet.next() )
+                    {
+                        person.setLikelihood(3);
+                    }
+                    return person;
+                }
+                else
+                {
+                    String townNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName) LIKE ? and LOWER(LastName) LIKE ? and LOWER(Town) LIKE ?";
+                    preparedStatement = connect.prepareStatement(townNameSQL);
+                    preparedStatement.setString(1, person.getFname().toLowerCase());
+                    preparedStatement.setString(2, person.getLName().toLowerCase());
+                    preparedStatement.setString(3, person.getTown().toLowerCase());
+                    resultSet = preparedStatement
+                      .executeQuery();
+                    if ( resultSet.next() )
+                    {
+                        person.setLikelihood(2);
+
+                    }
+                     return person;
+                }
 
             }
         }
