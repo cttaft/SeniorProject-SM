@@ -9,11 +9,14 @@ import java.util.ArrayList;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingWorker;
+
+import java.net.URI;
 import org.jsoup.*;
 
 import java.net.URL;
@@ -35,6 +38,8 @@ public class SMGUI extends javax.swing.JFrame
     {
 
         initComponents();
+        jLayeredPane2.setVisible(false);
+        jToggleButton1.setVisible(false);
     }
 
     /** This method is called from within the constructor to
@@ -47,19 +52,71 @@ public class SMGUI extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel3 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList();
-        jLabel3 = new javax.swing.JLabel();
+        jLayeredPane2 = new javax.swing.JLayeredPane();
+        compareNameLabel = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        DatabaseName = new javax.swing.JLabel();
+        ObitName = new javax.swing.JLabel();
+        DbTown = new javax.swing.JLabel();
+        obitTown = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 204));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jButton1.setText("Find Obits");
+        jButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, 126, 40));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(787, 78, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, -1, -1));
+
+        jProgressBar1.setBackground(new java.awt.Color(204, 204, 204));
+        jProgressBar1.setForeground(new java.awt.Color(51, 204, 0));
+        getContentPane().add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, -1, -1));
+
+        jLabel3.setText("Sympathy Manager");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(309, 30, 161, 34));
+
+        jToggleButton1.setText("Compare");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, -1, -1));
 
         jList1.setModel(new javax.swing.AbstractListModel()
             {
@@ -69,19 +126,8 @@ public class SMGUI extends javax.swing.JFrame
             });
             jScrollPane1.setViewportView(jList1);
 
-            jButton1.setText("Find Obits");
-            jButton1.addActionListener(new java.awt.event.ActionListener()
-            {
-                public void actionPerformed(java.awt.event.ActionEvent evt)
-                {
-                    jButton1ActionPerformed(evt);
-                }
-            });
-
-            jLabel2.setText("RIP");
-
-            jProgressBar1.setBackground(new java.awt.Color(204, 204, 204));
-            jProgressBar1.setForeground(new java.awt.Color(51, 204, 0));
+            jScrollPane1.setBounds(0, 20, 190, 130);
+            jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
             jList2.setModel(new javax.swing.AbstractListModel()
                 {
@@ -91,64 +137,54 @@ public class SMGUI extends javax.swing.JFrame
                 });
                 jScrollPane2.setViewportView(jList2);
 
-                jLabel3.setText("Sympathy Manager");
+                jScrollPane2.setBounds(200, 20, 121, 130);
+                jLayeredPane1.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-                getContentPane().setLayout(layout);
-                layout.setHorizontalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(182, 182, 182)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(171, 171, 171)
-                                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(112, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(23, 23, 23))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)))
-                );
-                layout.setVerticalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addGap(136, 136, 136))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(5, 5, 5)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                );
+                getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 330, 160));
+
+                jLayeredPane2.setBackground(new java.awt.Color(204, 204, 255));
+
+                compareNameLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                compareNameLabel.setText("Name");
+                compareNameLabel.setBounds(30, 30, 50, 40);
+                jLayeredPane2.add(compareNameLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                jLabel4.setText("Town");
+                jLabel4.setBounds(30, 110, 34, 17);
+                jLayeredPane2.add(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                DatabaseName.setText("DBName");
+                DatabaseName.setBounds(150, 40, 130, 30);
+                jLayeredPane2.add(DatabaseName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                ObitName.setText("obitName");
+                ObitName.setBounds(290, 40, 100, 30);
+                jLayeredPane2.add(ObitName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                DbTown.setText("DBTown");
+                DbTown.setBounds(150, 100, 130, 40);
+                jLayeredPane2.add(DbTown, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                obitTown.setText("obitTown");
+                obitTown.setBounds(290, 110, 110, 30);
+                jLayeredPane2.add(obitTown, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                jButton2.setText("Go to Url");
+                jButton2.addActionListener(new java.awt.event.ActionListener()
+                {
+                    public void actionPerformed(java.awt.event.ActionEvent evt)
+                    {
+                        jButton2ActionPerformed(evt);
+                    }
+                });
+                jButton2.setBounds(180, 140, 110, 20);
+                jLayeredPane2.add(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                getContentPane().add(jLayeredPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 85, 412, 159));
 
                 pack();
             }// </editor-fold>//GEN-END:initComponents
-
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
@@ -178,6 +214,7 @@ public class SMGUI extends javax.swing.JFrame
                       getSelectedIndex()).
                       getFname()));
                     jList1.setCellRenderer(new MyCellRenderer());
+                    jToggleButton1.setVisible(true);
 
                 }
                 catch ( InterruptedException ignore )
@@ -209,6 +246,43 @@ public class SMGUI extends javax.swing.JFrame
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton1ActionPerformed
+    {//GEN-HEADEREND:event_jToggleButton1ActionPerformed
+        boolean toggleVisibility = false;
+        if ( !jLayeredPane1.isVisible() )
+        {
+            toggleVisibility = true;
+        }
+        String name = ( ( Deceased ) jList1.getSelectedValue() ).getFname() + " " +
+          ( ( Deceased ) jList1.getSelectedValue() ).getMI() + ". " + ( ( Deceased ) jList1.
+          getSelectedValue() ).getLName();
+        DatabaseName.setText(name);
+        DbTown.setText(( ( Deceased ) jList1.getSelectedValue() ).getTown());
+        jLayeredPane1.setVisible(toggleVisibility);
+
+
+        jLayeredPane2.setVisible(!toggleVisibility);
+        jButton1.setVisible(toggleVisibility);
+        jProgressBar1.setVisible(toggleVisibility);
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton2ActionPerformed
+    {//GEN-HEADEREND:event_jButton2ActionPerformed
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        if ( desktop != null && desktop.isSupported(Desktop.Action.BROWSE) )
+        {
+            try
+            {
+                desktop.browse(new URI(( ( Deceased ) jList1.getSelectedValue() ).getURL()));
+            }
+            catch ( Exception e )
+            {
+
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -266,15 +340,26 @@ public class SMGUI extends javax.swing.JFrame
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel DatabaseName;
+    private javax.swing.JLabel DbTown;
+    private javax.swing.JLabel ObitName;
+    private javax.swing.JLabel compareNameLabel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLayeredPane jLayeredPane1;
+    private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JList jList1;
     private javax.swing.JList jList2;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel obitTown;
     // End of variables declaration//GEN-END:variables
 
     class MyCellRenderer extends JLabel implements ListCellRenderer<Object>
