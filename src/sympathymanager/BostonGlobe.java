@@ -50,21 +50,25 @@ public class BostonGlobe implements ConnectToPaper
             DeceasedList.add(new BGDeceased(obitNames.get(count).text()));
         }
         getURLS();
-        for( Deceased dead: DeceasedList)
+        for(Deceased dead: DeceasedList)
+        {
+            msc.findBaseMatch(dead);
+            if(dead.getLikelihood() == 1)
+                MatchList.add(dead);
+        }
+        for( Deceased dead: MatchList)
         {
             dead.setTown(getTowns(DeceasedList.indexOf(dead)));
             dead.setURL(URLlist.get(DeceasedList.indexOf(dead)));
             dead.setPicture(getPictures(dead.getURL()));
-        }
-        for(Deceased dead: DeceasedList)
-        {
-            Deceased thisDead = msc.findMatch(dead);
-            if (thisDead.getLikelihood() > 0)
-            {
-                MatchList.add(thisDead);
-            }
 
         }
+        for(Deceased dead: MatchList)
+        {
+            Deceased thisDead = msc.findMatch(dead);
+
+        }
+
         return MatchList;
     }
 

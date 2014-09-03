@@ -84,6 +84,65 @@ public class MySqlConnection
         }
     }
 
+    public void minMatch( Deceased person )
+    {
+        try
+        {
+            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName)  LIKE ? and LOWER(LastName) LIKE ?";
+            preparedStatement = connect.prepareStatement(nameSQL);
+            preparedStatement.setString(1, person.getFname().toLowerCase());
+            preparedStatement.setString(2, person.getLName().toLowerCase());
+            resultSet = preparedStatement
+              .executeQuery();
+            if ( !resultSet.next() )
+            {
+                person.setLikelihood(0);
+
+            }
+            else
+            {
+                person.setLikelihood(1);
+            }
+        }
+        catch ( Exception e )
+        {
+            e.toString();
+        }
+        finally
+        {
+            close();
+        }
+
+
+    }
+
+    public Deceased findBaseMatch(Deceased person)
+    {
+          try
+        {
+            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName)  LIKE ? and LOWER(LastName) LIKE ?";
+            preparedStatement = connect.prepareStatement(nameSQL);
+            preparedStatement.setString(1, person.getFname().toLowerCase());
+            preparedStatement.setString(2, person.getLName().toLowerCase());
+            resultSet = preparedStatement
+              .executeQuery();
+            if ( !resultSet.next() )
+            {
+                person.setLikelihood(0);
+
+            }
+            else
+            {
+                person.setLikelihood(1);
+
+            }
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+         return person;
+    }
+
     public Deceased findMatch( Deceased person )
     {
         try
@@ -140,7 +199,7 @@ public class MySqlConnection
                         person.setLikelihood(2);
 
                     }
-                     return person;
+                    return person;
                 }
 
             }
