@@ -26,6 +26,7 @@ public class MySqlConnection
     private ResultSet resultSet = null;
     private ArrayList<Deceased> dataDeathList = new ArrayList<Deceased>();
     private ArrayList<Deceased> matchingDBList = new ArrayList<>();
+    private Deceased dbDead;
 
     public MySqlConnection()
     {
@@ -84,7 +85,31 @@ public class MySqlConnection
         }
     }
 
-    public void minMatch( Deceased person )
+    private Deceased extractDeceased(ResultSet resultSet)
+    {
+
+         try
+         {
+
+              String firstName = resultSet.getString("FirstName");
+            String MiddleInitial = resultSet.getString("MiddleInitial");
+            String lastName = resultSet.getString("LastName");
+            int ID = resultSet.getInt("ID");
+            String town = resultSet.getString("Town");
+            dbDead = new BGDeceased(firstName, lastName, MiddleInitial);
+              dbDead.setTown(town);
+              return dbDead;
+         }
+         catch(Exception e)
+         {
+             e.printStackTrace();
+             return dbDead;
+         }
+
+
+    }
+
+    public Deceased minMatch( Deceased person )
     {
         try
         {
@@ -97,16 +122,18 @@ public class MySqlConnection
             if ( !resultSet.next() )
             {
                 person.setLikelihood(0);
-
+                return null;
             }
             else
             {
                 person.setLikelihood(1);
+                return extractDeceased(resultSet);
             }
         }
         catch ( Exception e )
         {
             e.toString();
+            return null;
         }
         finally
         {
@@ -143,7 +170,7 @@ public class MySqlConnection
          return person;
     }
 
-    public Deceased findMatch( Deceased person )
+    public void findMatch( Deceased person )
     {
         try
         {
@@ -156,7 +183,7 @@ public class MySqlConnection
             if ( !resultSet.next() )
             {
                 person.setLikelihood(0);
-                return person;
+                return;
             }
             else
             {
@@ -183,7 +210,7 @@ public class MySqlConnection
                     {
                         person.setLikelihood(3);
                     }
-                    return person;
+                    return;
                 }
                 else
                 {
@@ -199,7 +226,7 @@ public class MySqlConnection
                         person.setLikelihood(2);
 
                     }
-                    return person;
+                    return;
                 }
 
             }
@@ -213,7 +240,7 @@ public class MySqlConnection
             close();
         }
 
-        return person;
+        return;
 
 
     }

@@ -17,7 +17,7 @@ public class BGDeceased implements Deceased
     private String town;
     private String URL;
     private String picture;
-    private int likelihood;
+    private int likelihood;     
 
     public BGDeceased()
     {
@@ -119,7 +119,7 @@ public class BGDeceased implements Deceased
     {
         return town;
     }
-    
+
     public void setPicture( String pic )
     {
         picture = pic;

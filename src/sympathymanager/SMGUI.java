@@ -31,7 +31,7 @@ public class SMGUI extends javax.swing.JFrame
     private MySqlConnection database = new MySqlConnection();
     private ArrayList<Deceased> databaseList = new ArrayList<>();
     private ArrayList<Deceased> jSoupList = new ArrayList<>();
-    private ArrayList<Deceased> finalList = new ArrayList<>();
+    private ArrayList<Deceased> dbList = new ArrayList<>();
 
     /** Creates new form SMGUI */
     public SMGUI()
@@ -193,10 +193,11 @@ public class SMGUI extends javax.swing.JFrame
         jProgressBar1.setIndeterminate(true);
         SwingWorker worker = new SwingWorker<ArrayList<Deceased>, Void>()
         {
+            BostonGlobe bc = new BostonGlobe();
             @Override
             public ArrayList<Deceased> doInBackground()
             {
-                BostonGlobe bc = new BostonGlobe();
+
                 connection = bc.jsoupConnection();
                 return bc.getNames();
             }
@@ -215,6 +216,7 @@ public class SMGUI extends javax.swing.JFrame
                       getFname()));
                     jList1.setCellRenderer(new MyCellRenderer());
                     jToggleButton1.setVisible(true);
+                    dbList = bc.getDbList();
 
                 }
                 catch ( InterruptedException ignore )
@@ -254,11 +256,15 @@ public class SMGUI extends javax.swing.JFrame
         {
             toggleVisibility = true;
         }
+        int index = jList1.getSelectedIndex();
         String name = ( ( Deceased ) jList1.getSelectedValue() ).getFname() + " " +
           ( ( Deceased ) jList1.getSelectedValue() ).getMI() + ". " + ( ( Deceased ) jList1.
           getSelectedValue() ).getLName();
-        DatabaseName.setText(name);
-        DbTown.setText(( ( Deceased ) jList1.getSelectedValue() ).getTown());
+        String dbName = dbList.get(index).getLName();
+        DatabaseName.setText(dbName);
+        DbTown.setText(dbList.get(index).getTown());
+        ObitName.setText(name);
+        obitTown.setText(( ( Deceased ) jList1.getSelectedValue() ).getTown());
         jLayeredPane1.setVisible(toggleVisibility);
 
 
