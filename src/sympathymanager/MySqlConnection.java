@@ -85,26 +85,26 @@ public class MySqlConnection
         }
     }
 
-    private Deceased extractDeceased(ResultSet resultSet)
+    private Deceased extractDeceased( ResultSet resultSet )
     {
 
-         try
-         {
+        try
+        {
 
-              String firstName = resultSet.getString("FirstName");
+            String firstName = resultSet.getString("FirstName");
             String MiddleInitial = resultSet.getString("MiddleInitial");
             String lastName = resultSet.getString("LastName");
             int ID = resultSet.getInt("ID");
             String town = resultSet.getString("Town");
             dbDead = new BGDeceased(firstName, lastName, MiddleInitial);
-              dbDead.setTown(town);
-              return dbDead;
-         }
-         catch(Exception e)
-         {
-             e.printStackTrace();
-             return dbDead;
-         }
+            dbDead.setTown(town);
+            return dbDead;
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            return dbDead;
+        }
 
 
     }
@@ -143,14 +143,14 @@ public class MySqlConnection
 
     }
 
-    public Deceased findBaseMatch(Deceased person)
+    public Deceased findBaseMatch( Deceased person )
     {
-          try
+        try
         {
             String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName)  LIKE ? and LOWER(LastName) LIKE ?";
             preparedStatement = connect.prepareStatement(nameSQL);
-            preparedStatement.setString(1, person.getFname().toLowerCase());
-            preparedStatement.setString(2, person.getLName().toLowerCase());
+            preparedStatement.setString(1, "%" + person.getFname().toLowerCase() + "%");
+            preparedStatement.setString(2, "%" + person.getLName().toLowerCase() + "%");
             resultSet = preparedStatement
               .executeQuery();
             if ( !resultSet.next() )
@@ -161,13 +161,15 @@ public class MySqlConnection
             else
             {
                 person.setLikelihood(1);
+                return extractDeceased(resultSet);
 
             }
-        }catch(Exception e)
+        }
+        catch ( Exception e )
         {
             e.printStackTrace();
         }
-         return person;
+        return null;
     }
 
     public void findMatch( Deceased person )
@@ -176,8 +178,8 @@ public class MySqlConnection
         {
             String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName)  LIKE ? and LOWER(LastName) LIKE ?";
             preparedStatement = connect.prepareStatement(nameSQL);
-            preparedStatement.setString(1, person.getFname().toLowerCase());
-            preparedStatement.setString(2, person.getLName().toLowerCase());
+            preparedStatement.setString(1, "%" + person.getFname().toLowerCase() + "%");
+            preparedStatement.setString(2, "%" + person.getLName().toLowerCase() + "%");
             resultSet = preparedStatement
               .executeQuery();
             if ( !resultSet.next() )
@@ -190,9 +192,9 @@ public class MySqlConnection
                 person.setLikelihood(1);
                 String middleNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName) LIKE ? and LOWER(LastName) COLLATE UTF8_GENERAL_CI LIKE ? and LOWER(MiddleInitial) LIKE ?";
                 preparedStatement = connect.prepareStatement(middleNameSQL);
-                preparedStatement.setString(1, person.getFname().toLowerCase());
-                preparedStatement.setString(2, person.getLName().toLowerCase());
-                preparedStatement.setString(3, person.getMI().toLowerCase());
+                preparedStatement.setString(1, "%" + person.getFname().toLowerCase() + "%");
+                preparedStatement.setString(2, "%" + person.getLName().toLowerCase() + "%");
+                preparedStatement.setString(3, "%" + person.getMI().toLowerCase() + "%");
                 resultSet = preparedStatement
                   .executeQuery();
                 if ( resultSet.next() )
@@ -200,9 +202,9 @@ public class MySqlConnection
                     person.setLikelihood(2);
                     String townNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName) LIKE ? and LOWER(LastName) LIKE ? and Lower(middleInitial) LIKE ? and LOWER(Town) LIKE ?";
                     preparedStatement = connect.prepareStatement(townNameSQL);
-                    preparedStatement.setString(1, person.getFname().toLowerCase());
-                    preparedStatement.setString(2, person.getLName().toLowerCase());
-                    preparedStatement.setString(3, person.getMI().toLowerCase());
+                    preparedStatement.setString(1, "%" + person.getFname().toLowerCase() + "%");
+                    preparedStatement.setString(2, "%" + person.getLName().toLowerCase() + "%");
+                    preparedStatement.setString(3, "%" + person.getMI().toLowerCase() + "%");
                     preparedStatement.setString(4, person.getTown().toLowerCase());
                     resultSet = preparedStatement
                       .executeQuery();
@@ -216,9 +218,9 @@ public class MySqlConnection
                 {
                     String townNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName) LIKE ? and LOWER(LastName) LIKE ? and LOWER(Town) LIKE ?";
                     preparedStatement = connect.prepareStatement(townNameSQL);
-                    preparedStatement.setString(1, person.getFname().toLowerCase());
-                    preparedStatement.setString(2, person.getLName().toLowerCase());
-                    preparedStatement.setString(3, person.getTown().toLowerCase());
+                    preparedStatement.setString(1, "%" + person.getFname().toLowerCase() + "%");
+                    preparedStatement.setString(2, "%" + person.getLName().toLowerCase() + "%");
+                    preparedStatement.setString(3, "%" + person.getTown().toLowerCase() + "%");
                     resultSet = preparedStatement
                       .executeQuery();
                     if ( resultSet.next() )

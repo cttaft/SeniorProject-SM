@@ -40,6 +40,14 @@ public class SMGUI extends javax.swing.JFrame
         initComponents();
         jLayeredPane2.setVisible(false);
         jToggleButton1.setVisible(false);
+        try
+        {
+         java.net.URL imgURL = new URL("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRcdfT66-akWVg8x0lNBhZobAwloDbou0I49xxFD2MLHKycsROG");
+          ImageIcon titleIcon = new ImageIcon(imgURL);
+        jLabel2.setIcon(titleIcon);
+        }
+        catch(Exception e){e.printStackTrace();}
+
     }
 
     /** This method is called from within the constructor to
@@ -57,7 +65,7 @@ public class SMGUI extends javax.swing.JFrame
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
-        jLabel3 = new javax.swing.JLabel();
+        Title = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -67,11 +75,15 @@ public class SMGUI extends javax.swing.JFrame
         jLayeredPane2 = new javax.swing.JLayeredPane();
         compareNameLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        DatabaseName = new javax.swing.JLabel();
-        ObitName = new javax.swing.JLabel();
+        DatabaseLName = new javax.swing.JLabel();
+        ObitLName = new javax.swing.JLabel();
         DbTown = new javax.swing.JLabel();
         obitTown = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        DbFName = new javax.swing.JLabel();
+        ObitFname = new javax.swing.JLabel();
+        dbMiddle = new javax.swing.JLabel();
+        obitMiddle = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -97,16 +109,16 @@ public class SMGUI extends javax.swing.JFrame
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, 126, 40));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 270, 126, 40));
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(787, 78, -1, -1));
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 90, -1, -1));
 
         jProgressBar1.setBackground(new java.awt.Color(204, 204, 204));
         jProgressBar1.setForeground(new java.awt.Color(51, 204, 0));
-        getContentPane().add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, -1, -1));
+        getContentPane().add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, -1, -1));
 
-        jLabel3.setText("Sympathy Manager");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(309, 30, 161, 34));
+        Title.setText("Sympathy Manager");
+        getContentPane().add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 161, 34));
 
         jToggleButton1.setText("Compare");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener()
@@ -151,23 +163,23 @@ public class SMGUI extends javax.swing.JFrame
 
                 jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
                 jLabel4.setText("Town");
-                jLabel4.setBounds(30, 110, 34, 17);
+                jLabel4.setBounds(30, 100, 34, 17);
                 jLayeredPane2.add(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                DatabaseName.setText("DBName");
-                DatabaseName.setBounds(150, 40, 130, 30);
-                jLayeredPane2.add(DatabaseName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                DatabaseLName.setText("DBName");
+                DatabaseLName.setBounds(150, 60, 130, 30);
+                jLayeredPane2.add(DatabaseLName, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                ObitName.setText("obitName");
-                ObitName.setBounds(290, 40, 100, 30);
-                jLayeredPane2.add(ObitName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                ObitLName.setText("obitName");
+                ObitLName.setBounds(290, 60, 100, 30);
+                jLayeredPane2.add(ObitLName, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
                 DbTown.setText("DBTown");
-                DbTown.setBounds(150, 100, 130, 40);
+                DbTown.setBounds(150, 90, 130, 40);
                 jLayeredPane2.add(DbTown, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
                 obitTown.setText("obitTown");
-                obitTown.setBounds(290, 110, 110, 30);
+                obitTown.setBounds(290, 90, 110, 30);
                 jLayeredPane2.add(obitTown, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
                 jButton2.setText("Go to Url");
@@ -178,8 +190,24 @@ public class SMGUI extends javax.swing.JFrame
                         jButton2ActionPerformed(evt);
                     }
                 });
-                jButton2.setBounds(180, 140, 110, 20);
+                jButton2.setBounds(190, 120, 110, 20);
                 jLayeredPane2.add(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                DbFName.setText("jLabel5");
+                DbFName.setBounds(150, 30, 34, 14);
+                jLayeredPane2.add(DbFName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                ObitFname.setText("jLabel5");
+                ObitFname.setBounds(290, 30, 34, 14);
+                jLayeredPane2.add(ObitFname, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                dbMiddle.setText("middleName");
+                dbMiddle.setBounds(150, 50, 57, 14);
+                jLayeredPane2.add(dbMiddle, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+                obitMiddle.setText("jLabel6");
+                obitMiddle.setBounds(290, 50, 34, 14);
+                jLayeredPane2.add(obitMiddle, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
                 getContentPane().add(jLayeredPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 85, 412, 159));
 
@@ -224,7 +252,7 @@ public class SMGUI extends javax.swing.JFrame
                 }
                 catch ( java.util.concurrent.ExecutionException e )
                 {
-                    System.err.println("Error");
+                    e.printStackTrace();
                 }
 
             }
@@ -257,13 +285,17 @@ public class SMGUI extends javax.swing.JFrame
             toggleVisibility = true;
         }
         int index = jList1.getSelectedIndex();
-        String name = ( ( Deceased ) jList1.getSelectedValue() ).getFname() + " " +
-          ( ( Deceased ) jList1.getSelectedValue() ).getMI() + ". " + ( ( Deceased ) jList1.
-          getSelectedValue() ).getLName();
-        String dbName = dbList.get(index).getLName();
-        DatabaseName.setText(dbName);
+        String lastname =  ((Deceased) jList1.getSelectedValue()).getLName();
+         String firstname =  ((Deceased) jList1.getSelectedValue()).getFname();
+        String dbLName = dbList.get(index).getLName();
+        String dbfName = dbList.get(index).getFname();
+        DatabaseLName.setText(dbLName);
+        DbFName.setText(dbfName);
         DbTown.setText(dbList.get(index).getTown());
-        ObitName.setText(name);
+        dbMiddle.setText( ((Deceased) jList1.getSelectedValue()).getMI());
+        obitMiddle.setText(dbList.get(index).getMI());
+        ObitLName.setText(lastname);
+        ObitFname.setText(firstname);
         obitTown.setText(( ( Deceased ) jList1.getSelectedValue() ).getTown());
         jLayeredPane1.setVisible(toggleVisibility);
 
@@ -346,15 +378,18 @@ public class SMGUI extends javax.swing.JFrame
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel DatabaseName;
+    private javax.swing.JLabel DatabaseLName;
+    private javax.swing.JLabel DbFName;
     private javax.swing.JLabel DbTown;
-    private javax.swing.JLabel ObitName;
+    private javax.swing.JLabel ObitFname;
+    private javax.swing.JLabel ObitLName;
+    private javax.swing.JLabel Title;
     private javax.swing.JLabel compareNameLabel;
+    private javax.swing.JLabel dbMiddle;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
@@ -365,6 +400,7 @@ public class SMGUI extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel obitMiddle;
     private javax.swing.JLabel obitTown;
     // End of variables declaration//GEN-END:variables
 

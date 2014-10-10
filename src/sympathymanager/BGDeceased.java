@@ -17,7 +17,7 @@ public class BGDeceased implements Deceased
     private String town;
     private String URL;
     private String picture;
-    private int likelihood;     
+    private int likelihood;
 
     public BGDeceased()
     {
@@ -38,7 +38,10 @@ public class BGDeceased implements Deceased
         setFname(allNames[2]);
         if ( allNames.length >= 4 )
         {
-            setMI(allNames[3].substring(0,1));
+            if (allNames[3].length() > 0)
+            {
+                setMI(allNames[3].substring(0,1));
+            }
         }
         else
         {
