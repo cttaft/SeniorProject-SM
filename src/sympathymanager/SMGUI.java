@@ -13,6 +13,7 @@ import java.awt.Desktop;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingWorker;
 
@@ -40,6 +41,7 @@ public class SMGUI extends javax.swing.JFrame
         initComponents();
         jLayeredPane2.setVisible(false);
         jToggleButton1.setVisible(false);
+        submitButton.setVisible(false);
         try
         {
          java.net.URL imgURL = new URL("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRcdfT66-akWVg8x0lNBhZobAwloDbou0I49xxFD2MLHKycsROG");
@@ -70,8 +72,6 @@ public class SMGUI extends javax.swing.JFrame
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         compareNameLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -84,6 +84,7 @@ public class SMGUI extends javax.swing.JFrame
         ObitFname = new javax.swing.JLabel();
         dbMiddle = new javax.swing.JLabel();
         obitMiddle = new javax.swing.JLabel();
+        submitButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -99,6 +100,7 @@ public class SMGUI extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 204));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(java.awt.Color.white);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("Find Obits");
@@ -115,10 +117,11 @@ public class SMGUI extends javax.swing.JFrame
 
         jProgressBar1.setBackground(new java.awt.Color(204, 204, 204));
         jProgressBar1.setForeground(new java.awt.Color(51, 204, 0));
-        getContentPane().add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 320, -1, -1));
+        getContentPane().add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 320, 170, -1));
 
+        Title.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
         Title.setText("Sympathy Manager");
-        getContentPane().add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 161, 34));
+        getContentPane().add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 260, 34));
 
         jToggleButton1.setText("Compare");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener()
@@ -128,7 +131,7 @@ public class SMGUI extends javax.swing.JFrame
                 jToggleButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, -1, -1));
+        getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, -1, -1));
 
         jList1.setModel(new javax.swing.AbstractListModel()
             {
@@ -138,81 +141,80 @@ public class SMGUI extends javax.swing.JFrame
             });
             jScrollPane1.setViewportView(jList1);
 
-            jScrollPane1.setBounds(0, 20, 190, 130);
+            jScrollPane1.setBounds(50, 20, 270, 130);
             jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-            jList2.setModel(new javax.swing.AbstractListModel()
+            getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 440, 190));
+
+            jLayeredPane2.setBackground(new java.awt.Color(204, 204, 255));
+
+            compareNameLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+            compareNameLabel.setText("Name");
+            compareNameLabel.setBounds(30, 30, 50, 40);
+            jLayeredPane2.add(compareNameLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+            jLabel4.setText("Town");
+            jLabel4.setBounds(30, 100, 34, 17);
+            jLayeredPane2.add(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            DatabaseLName.setText("DBName");
+            DatabaseLName.setBounds(150, 60, 130, 30);
+            jLayeredPane2.add(DatabaseLName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            ObitLName.setText("obitName");
+            ObitLName.setBounds(290, 60, 100, 30);
+            jLayeredPane2.add(ObitLName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            DbTown.setText("DBTown");
+            DbTown.setBounds(150, 90, 130, 40);
+            jLayeredPane2.add(DbTown, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            obitTown.setText("obitTown");
+            obitTown.setBounds(290, 100, 110, 20);
+            jLayeredPane2.add(obitTown, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            jButton2.setText("Go to Url");
+            jButton2.addActionListener(new java.awt.event.ActionListener()
+            {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
                 {
-                    String[] strings = {  };
-                    public int getSize() { return strings.length; }
-                    public Object getElementAt(int i) { return strings[i]; }
-                });
-                jScrollPane2.setViewportView(jList2);
+                    jButton2ActionPerformed(evt);
+                }
+            });
+            jButton2.setBounds(190, 130, 110, 20);
+            jLayeredPane2.add(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                jScrollPane2.setBounds(200, 20, 121, 130);
-                jLayeredPane1.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            DbFName.setText("jLabel5");
+            DbFName.setBounds(150, 30, 34, 14);
+            jLayeredPane2.add(DbFName, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 330, 160));
+            ObitFname.setText("jLabel5");
+            ObitFname.setBounds(290, 30, 60, 14);
+            jLayeredPane2.add(ObitFname, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                jLayeredPane2.setBackground(new java.awt.Color(204, 204, 255));
+            dbMiddle.setText("middleName");
+            dbMiddle.setBounds(150, 50, 57, 14);
+            jLayeredPane2.add(dbMiddle, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                compareNameLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-                compareNameLabel.setText("Name");
-                compareNameLabel.setBounds(30, 30, 50, 40);
-                jLayeredPane2.add(compareNameLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            obitMiddle.setText("jLabel6");
+            obitMiddle.setBounds(290, 50, 60, 14);
+            jLayeredPane2.add(obitMiddle, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-                jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-                jLabel4.setText("Town");
-                jLabel4.setBounds(30, 100, 34, 17);
-                jLayeredPane2.add(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            getContentPane().add(jLayeredPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 85, 420, 180));
 
-                DatabaseLName.setText("DBName");
-                DatabaseLName.setBounds(150, 60, 130, 30);
-                jLayeredPane2.add(DatabaseLName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-                ObitLName.setText("obitName");
-                ObitLName.setBounds(290, 60, 100, 30);
-                jLayeredPane2.add(ObitLName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-                DbTown.setText("DBTown");
-                DbTown.setBounds(150, 90, 130, 40);
-                jLayeredPane2.add(DbTown, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-                obitTown.setText("obitTown");
-                obitTown.setBounds(290, 90, 110, 30);
-                jLayeredPane2.add(obitTown, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-                jButton2.setText("Go to Url");
-                jButton2.addActionListener(new java.awt.event.ActionListener()
+            submitButton.setText("Submit");
+            submitButton.addActionListener(new java.awt.event.ActionListener()
+            {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
                 {
-                    public void actionPerformed(java.awt.event.ActionEvent evt)
-                    {
-                        jButton2ActionPerformed(evt);
-                    }
-                });
-                jButton2.setBounds(190, 120, 110, 20);
-                jLayeredPane2.add(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+                    submitButtonActionPerformed(evt);
+                }
+            });
+            getContentPane().add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 290, 140, 60));
 
-                DbFName.setText("jLabel5");
-                DbFName.setBounds(150, 30, 34, 14);
-                jLayeredPane2.add(DbFName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-                ObitFname.setText("jLabel5");
-                ObitFname.setBounds(290, 30, 34, 14);
-                jLayeredPane2.add(ObitFname, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-                dbMiddle.setText("middleName");
-                dbMiddle.setBounds(150, 50, 57, 14);
-                jLayeredPane2.add(dbMiddle, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-                obitMiddle.setText("jLabel6");
-                obitMiddle.setBounds(290, 50, 34, 14);
-                jLayeredPane2.add(obitMiddle, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-                getContentPane().add(jLayeredPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 85, 412, 159));
-
-                pack();
-            }// </editor-fold>//GEN-END:initComponents
+            pack();
+        }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
@@ -236,8 +238,10 @@ public class SMGUI extends javax.swing.JFrame
                 try
                 {
                     jSoupList = get();
+                     jProgressBar1.setIndeterminate(false);
+                    if (!jSoupList.isEmpty())
+                    {
                     jList1.setListData(jSoupList.toArray());
-                    jProgressBar1.setIndeterminate(false);
                     jList1.setSelectedIndex(0);
                     jList1.setToolTipText(String.format("%s", jSoupList.get(jList1.
                       getSelectedIndex()).
@@ -245,6 +249,16 @@ public class SMGUI extends javax.swing.JFrame
                     jList1.setCellRenderer(new MyCellRenderer());
                     jToggleButton1.setVisible(true);
                     dbList = bc.getDbList();
+                    submitButton.setVisible(true);
+                    }
+
+                    else
+                    {
+                        String[] noMatch = {"No Matching Names Found"};
+                        jList1.setListData(noMatch);
+                    }
+
+
 
                 }
                 catch ( InterruptedException ignore )
@@ -266,7 +280,7 @@ public class SMGUI extends javax.swing.JFrame
         {
 
             databaseList = database.readDataBase();
-            jList2.setListData(databaseList.toArray());
+
 
         }
         catch ( Exception e )
@@ -289,6 +303,8 @@ public class SMGUI extends javax.swing.JFrame
          String firstname =  ((Deceased) jList1.getSelectedValue()).getFname();
         String dbLName = dbList.get(index).getLName();
         String dbfName = dbList.get(index).getFname();
+        String thisTown = ( ( Deceased ) jList1.getSelectedValue() ).getTown();
+        String dbTown = dbList.get(index).getTown();
         DatabaseLName.setText(dbLName);
         DbFName.setText(dbfName);
         DbTown.setText(dbList.get(index).getTown());
@@ -296,7 +312,15 @@ public class SMGUI extends javax.swing.JFrame
         obitMiddle.setText(dbList.get(index).getMI());
         ObitLName.setText(lastname);
         ObitFname.setText(firstname);
-        obitTown.setText(( ( Deceased ) jList1.getSelectedValue() ).getTown());
+        obitTown.setText(thisTown);
+        if(!thisTown.equals(dbTown))
+            obitTown.setForeground(Color.red);
+        else
+             obitTown.setForeground(Color.black);
+         if(!((Deceased) jList1.getSelectedValue()).getMI().substring(0,0).equals(dbList.get(index).getMI().substring(0, 0)))
+            obitMiddle.setForeground(Color.red);
+        else
+             obitMiddle.setForeground(Color.black);
         jLayeredPane1.setVisible(toggleVisibility);
 
 
@@ -321,6 +345,11 @@ public class SMGUI extends javax.swing.JFrame
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_submitButtonActionPerformed
+    {//GEN-HEADEREND:event_submitButtonActionPerformed
+        JOptionPane.showConfirmDialog(null,  "Are You Sure?");
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -394,14 +423,13 @@ public class SMGUI extends javax.swing.JFrame
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JList jList1;
-    private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel obitMiddle;
     private javax.swing.JLabel obitTown;
+    private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 
     class MyCellRenderer extends JLabel implements ListCellRenderer<Object>

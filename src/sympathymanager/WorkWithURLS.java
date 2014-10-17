@@ -20,9 +20,9 @@ public class WorkWithURLS
     Element picture;
     private Document doc;
 
-    public WorkWithURLS(String JsoupURL)
-  {
-       try
+    public WorkWithURLS( String JsoupURL )
+    {
+        try
         {
             doc = Jsoup.connect(JsoupURL).get();
         }
@@ -31,25 +31,32 @@ public class WorkWithURLS
             System.out.println("Error Connecting to Jsoup ");
         }
 
-  }
-    public String getPicture(  )
+    }
+
+    public String getPicture()
     {
 
         picture = doc.select("img[id = ctl00_MainContentPlaceholder_Photo").first();
-        pictureUrl = picture.attr("src");
+        if ( picture != null )
+        {
+            pictureUrl = picture.attr("src");
+        }
 
         return pictureUrl;
 
     }
 
-    public String getTown(  )
+    public String getTown()
     {
         String town = "";
 
 
-        if(doc.select("span[itemprop=addressLocality").text()!=null)
-            town = doc.select("span[itemprop=addressLocality").text() ;
-        
-        return town.split(" ")[0];
+        if ( doc.select("span[itemprop=addressLocality").text() != null )
+        {
+            town = doc.select("span[itemprop=addressLocality").text();
+
+            return town.split(" ")[0];
+        }
+        return "NotSupported";
     }
 }
