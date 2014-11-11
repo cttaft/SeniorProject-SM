@@ -31,11 +31,13 @@ public class BostonGlobe implements ConnectToPaper
         {
             connect = Jsoup.connect(
               "http://www.legacy.com/obituaries/bostonglobe/obituary-browse.aspx?recentdate=0&type=1&view=1");
+            connect.timeout(0);
             doc = connect.get();
         }
         catch ( Exception e )
         {
             System.out.println("Error Connecting to JSoup");
+            e.printStackTrace();
         }
 
         return connect;

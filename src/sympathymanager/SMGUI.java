@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingWorker;
 
+import com.mysql.jdbc.MySQLConnection;
 import java.net.URI;
 import org.jsoup.*;
 
@@ -186,7 +187,7 @@ public class SMGUI extends javax.swing.JFrame
             jLayeredPane2.add(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
             DbFName.setText("jLabel5");
-            DbFName.setBounds(150, 30, 34, 14);
+            DbFName.setBounds(150, 30, 70, 14);
             jLayeredPane2.add(DbFName, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
             ObitFname.setText("jLabel5");
@@ -194,7 +195,7 @@ public class SMGUI extends javax.swing.JFrame
             jLayeredPane2.add(ObitFname, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
             dbMiddle.setText("middleName");
-            dbMiddle.setBounds(150, 50, 57, 14);
+            dbMiddle.setBounds(150, 50, 100, 14);
             jLayeredPane2.add(dbMiddle, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
             obitMiddle.setText("jLabel6");
@@ -316,11 +317,12 @@ public class SMGUI extends javax.swing.JFrame
         if(!thisTown.equals(dbTown))
             obitTown.setForeground(Color.red);
         else
-             obitTown.setForeground(Color.black);
+             obitTown.setForeground(Color.DARK_GRAY);
+        if( ((Deceased)jList1.getSelectedValue()).getMI()!=null && dbList.get(index).getMI()!=null )
          if(!((Deceased) jList1.getSelectedValue()).getMI().substring(0,0).equals(dbList.get(index).getMI().substring(0, 0)))
             obitMiddle.setForeground(Color.red);
         else
-             obitMiddle.setForeground(Color.black);
+             obitMiddle.setForeground(Color.DARK_GRAY);
         jLayeredPane1.setVisible(toggleVisibility);
 
 
@@ -348,7 +350,14 @@ public class SMGUI extends javax.swing.JFrame
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_submitButtonActionPerformed
     {//GEN-HEADEREND:event_submitButtonActionPerformed
-        JOptionPane.showConfirmDialog(null,  "Are You Sure?");
+
+        int choice = JOptionPane.showConfirmDialog(null,  "Are You Sure?");
+        if(choice == 0)
+        {
+           database.submit((Deceased)jList1.getSelectedValue());
+        }
+
+
     }//GEN-LAST:event_submitButtonActionPerformed
 
     /**

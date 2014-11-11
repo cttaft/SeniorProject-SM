@@ -30,14 +30,16 @@ public class MySqlConnection
 
     public MySqlConnection()
     {
+        DBProperties properties = new DBProperties();
         try
         {
             //this will load the MySQL driver, each DB has its own driver
             Class.forName("com.mysql.jdbc.Driver");
             // setup the connection with the DB.
+            String connectionString = "jdbc:mysql://" + properties.getDomain() + "/" + properties.getDatabase() + "?" +
+              "user=" + properties.getUser() + "&password=" + properties.getPassword();
             connect = DriverManager
-              .getConnection("jdbc:mysql://localhost/deathchecker?" +
-              "user=cttaft&password=thomas22");
+              .getConnection(connectionString);
         }
         catch ( Exception e )
         {
@@ -244,6 +246,11 @@ public class MySqlConnection
 
         return;
 
+
+    }
+
+    public void submit(Deceased dead)
+    {
 
     }
 
