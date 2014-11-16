@@ -26,5 +26,7 @@ public interface Deceased {
        public String getPicture();
        public void setLikelihood(int like);
        public int getLikelihood();
+       public void setId(String id);
+       public String getId();
 
 }

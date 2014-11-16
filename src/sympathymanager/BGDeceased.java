@@ -18,6 +18,7 @@ public class BGDeceased implements Deceased
     private String URL;
     private String picture;
     private int likelihood;
+    private String id;
 
     public BGDeceased()
     {
@@ -34,6 +35,7 @@ public class BGDeceased implements Deceased
 
         String delims = "[, ]";
         String[] allNames = name.split(delims);
+        String[]town = name.split("- ");
         setLName(allNames[0]);
         setFname(allNames[2]);
         if ( allNames.length >= 4 )
@@ -47,7 +49,7 @@ public class BGDeceased implements Deceased
         {
             setMI(" ");
         }
-        town = null;
+        setTown(town[1]);
     }
 
     public BGDeceased( String first, String last, String MI )
@@ -55,6 +57,15 @@ public class BGDeceased implements Deceased
         firstName = first;
         lastName = last;
         mInitial = MI;
+
+
+    }
+     public BGDeceased( String first, String last, String MI, String id )
+    {
+        firstName = first;
+        lastName = last;
+        mInitial = MI;
+        this.id = id;
 
 
     }
@@ -146,6 +157,15 @@ public class BGDeceased implements Deceased
     {
         System.out.printf("%s|%s|%s\n", firstName, mInitial, lastName);
 
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+    public String getId()
+    {
+        return id;
     }
 
     public String toString()

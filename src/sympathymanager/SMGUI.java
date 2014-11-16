@@ -354,7 +354,8 @@ public class SMGUI extends javax.swing.JFrame
         int choice = JOptionPane.showConfirmDialog(null,  "Are You Sure?");
         if(choice == 0)
         {
-           database.submit((Deceased)jList1.getSelectedValue());
+            database = new MySqlConnection();
+           database.submit(dbList.get(jList1.getSelectedIndex()));
         }
 
 

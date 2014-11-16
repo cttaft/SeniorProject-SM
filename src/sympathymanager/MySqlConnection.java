@@ -81,8 +81,9 @@ public class MySqlConnection
             String firstName = resultSet.getString("FirstName");
             String MiddleInitial = resultSet.getString("MiddleInitial");
             String lastName = resultSet.getString("LastName");
-            int ID = resultSet.getInt("ID");
-            dataDeathList.add(new BGDeceased(firstName, lastName, MiddleInitial));
+            String ID = resultSet.getString("ID");
+            dataDeathList.add(new BGDeceased(firstName, lastName, MiddleInitial, ID));
+
 
         }
     }
@@ -96,9 +97,9 @@ public class MySqlConnection
             String firstName = resultSet.getString("FirstName");
             String MiddleInitial = resultSet.getString("MiddleInitial");
             String lastName = resultSet.getString("LastName");
-            int ID = resultSet.getInt("ID");
+            String ID = resultSet.getString("ID");
             String town = resultSet.getString("Town");
-            dbDead = new BGDeceased(firstName, lastName, MiddleInitial);
+            dbDead = new BGDeceased(firstName, lastName, MiddleInitial, ID);
             dbDead.setTown(town);
             return dbDead;
         }
@@ -251,7 +252,18 @@ public class MySqlConnection
 
     public void submit(Deceased dead)
     {
+        try{
+            String submitSQL = "insert into DEATHCHECKER.ConfirmedDead ( MemberId)"
+        + " values ( ?)";
+            preparedStatement = connect.prepareStatement(submitSQL);
 
+            preparedStatement.setInt(1, Integer.parseInt(dead.getId()));
+            preparedStatement
+                      .execute();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void close()
