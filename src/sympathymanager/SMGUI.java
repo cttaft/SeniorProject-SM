@@ -11,9 +11,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingWorker;
 
@@ -34,22 +36,28 @@ public class SMGUI extends javax.swing.JFrame
     private ArrayList<Deceased> databaseList = new ArrayList<>();
     private ArrayList<Deceased> jSoupList = new ArrayList<>();
     private ArrayList<Deceased> dbList = new ArrayList<>();
+    private boolean hasBeenToggled;
 
     /** Creates new form SMGUI */
     public SMGUI()
     {
 
         initComponents();
+        Mgmt.setVisible(false);
         jLayeredPane2.setVisible(false);
         jToggleButton1.setVisible(false);
         submitButton.setVisible(false);
         try
         {
-         java.net.URL imgURL = new URL("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRcdfT66-akWVg8x0lNBhZobAwloDbou0I49xxFD2MLHKycsROG");
-          ImageIcon titleIcon = new ImageIcon(imgURL);
-        jLabel2.setIcon(titleIcon);
+            java.net.URL imgURL = new URL(
+              "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRcdfT66-akWVg8x0lNBhZobAwloDbou0I49xxFD2MLHKycsROG");
+            ImageIcon titleIcon = new ImageIcon(imgURL);
+            jLabel2.setIcon(titleIcon);
         }
-        catch(Exception e){e.printStackTrace();}
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+        }
 
     }
 
@@ -73,6 +81,7 @@ public class SMGUI extends javax.swing.JFrame
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
+        jLayeredPane3 = new javax.swing.JLayeredPane();
         jLayeredPane2 = new javax.swing.JLayeredPane();
         compareNameLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -85,7 +94,13 @@ public class SMGUI extends javax.swing.JFrame
         ObitFname = new javax.swing.JLabel();
         dbMiddle = new javax.swing.JLabel();
         obitMiddle = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
+        Mgmt = new javax.swing.JLayeredPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        MgmtList = new javax.swing.JList();
+        jButton3 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -99,7 +114,7 @@ public class SMGUI extends javax.swing.JFrame
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(0, 153, 204));
+        setBackground(new java.awt.Color(0, 153, 102));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setForeground(java.awt.Color.white);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -132,7 +147,7 @@ public class SMGUI extends javax.swing.JFrame
                 jToggleButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, -1, -1));
+        getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
         jList1.setModel(new javax.swing.AbstractListModel()
             {
@@ -142,10 +157,12 @@ public class SMGUI extends javax.swing.JFrame
             });
             jScrollPane1.setViewportView(jList1);
 
-            jScrollPane1.setBounds(50, 20, 270, 130);
+            jScrollPane1.setBounds(100, 60, 360, 130);
             jLayeredPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+            jLayeredPane3.setBounds(80, 40, 0, 0);
+            jLayeredPane1.add(jLayeredPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-            getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 440, 190));
+            getContentPane().add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 560, 230));
 
             jLayeredPane2.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -202,6 +219,16 @@ public class SMGUI extends javax.swing.JFrame
             obitMiddle.setBounds(290, 50, 60, 14);
             jLayeredPane2.add(obitMiddle, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
+            jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+            jLabel3.setText("From DB");
+            jLabel3.setBounds(280, 0, 90, 22);
+            jLayeredPane2.add(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+            jLabel5.setText("From Obit");
+            jLabel5.setBounds(130, 4, 90, 20);
+            jLayeredPane2.add(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
             getContentPane().add(jLayeredPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 85, 420, 180));
 
             submitButton.setText("Submit");
@@ -214,6 +241,29 @@ public class SMGUI extends javax.swing.JFrame
             });
             getContentPane().add(submitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 290, 140, 60));
 
+            MgmtList.setModel(new javax.swing.AbstractListModel()
+            {
+                String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+                public int getSize() { return strings.length; }
+                public Object getElementAt(int i) { return strings[i]; }
+            });
+            jScrollPane2.setViewportView(MgmtList);
+
+            jScrollPane2.setBounds(70, 30, 360, 130);
+            Mgmt.add(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+            getContentPane().add(Mgmt, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 530, 190));
+
+            jButton3.setText("Manager Page");
+            jButton3.addActionListener(new java.awt.event.ActionListener()
+            {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                {
+                    jButton3ActionPerformed(evt);
+                }
+            });
+            getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 110, 30));
+
             pack();
         }// </editor-fold>//GEN-END:initComponents
 
@@ -225,6 +275,7 @@ public class SMGUI extends javax.swing.JFrame
         SwingWorker worker = new SwingWorker<ArrayList<Deceased>, Void>()
         {
             BostonGlobe bc = new BostonGlobe();
+
             @Override
             public ArrayList<Deceased> doInBackground()
             {
@@ -239,23 +290,44 @@ public class SMGUI extends javax.swing.JFrame
                 try
                 {
                     jSoupList = get();
-                     jProgressBar1.setIndeterminate(false);
-                    if (!jSoupList.isEmpty())
+                    jProgressBar1.setIndeterminate(false);
+                    if ( !jSoupList.isEmpty() )
                     {
-                    jList1.setListData(jSoupList.toArray());
-                    jList1.setSelectedIndex(0);
-                    jList1.setToolTipText(String.format("%s", jSoupList.get(jList1.
-                      getSelectedIndex()).
-                      getFname()));
-                    jList1.setCellRenderer(new MyCellRenderer());
-                    jToggleButton1.setVisible(true);
-                    dbList = bc.getDbList();
-                    submitButton.setVisible(true);
-                    }
+                        database = new MySqlConnection();
+                        ArrayList<Deceased> confirmed = database.GetConfirmedList();
+                        ArrayList<Deceased> toDelete = new ArrayList<Deceased>();
+                        MgmtList.setListData(confirmed.toArray());
+                        dbList = bc.getDbList();
+                        for ( Deceased dead : jSoupList )
+                        {
+                            if ( confirmed.contains(dead) )
+                            {
+                                toDelete.add(dead);
+                            }
+                        }
+                        for ( Deceased dead : toDelete )
+                        {
+                            jSoupList.remove(dead);
+                            dbList.remove(dead);
+                        }
+                        jList1.setListData(jSoupList.toArray());
+                        jList1.setSelectedIndex(0);
+                        jList1.setToolTipText(String.format("%s", jSoupList.get(jList1.
+                          getSelectedIndex()).
+                          getFname()));
+                        jList1.setCellRenderer(new MyCellRenderer());
+                        jToggleButton1.setVisible(true);
+                        hasBeenToggled = true;
 
+
+                        submitButton.setVisible(true);
+                    }
                     else
                     {
-                        String[] noMatch = {"No Matching Names Found"};
+                        String[] noMatch =
+                        {
+                            "No Matching Names Found"
+                        };
                         jList1.setListData(noMatch);
                     }
 
@@ -300,29 +372,41 @@ public class SMGUI extends javax.swing.JFrame
             toggleVisibility = true;
         }
         int index = jList1.getSelectedIndex();
-        String lastname =  ((Deceased) jList1.getSelectedValue()).getLName();
-         String firstname =  ((Deceased) jList1.getSelectedValue()).getFname();
+        String lastname = ( jSoupList.get(index) ).getLName();
+        String firstname = ( jSoupList.get(index) ).getFname();
         String dbLName = dbList.get(index).getLName();
         String dbfName = dbList.get(index).getFname();
-        String thisTown = ( ( Deceased ) jList1.getSelectedValue() ).getTown();
+        String thisTown = ( jSoupList.get(index) ).getTown();
         String dbTown = dbList.get(index).getTown();
         DatabaseLName.setText(dbLName);
         DbFName.setText(dbfName);
         DbTown.setText(dbList.get(index).getTown());
-        dbMiddle.setText( ((Deceased) jList1.getSelectedValue()).getMI());
+        dbMiddle.setText(( ( Deceased ) jList1.getSelectedValue() ).getMI());
         obitMiddle.setText(dbList.get(index).getMI());
         ObitLName.setText(lastname);
         ObitFname.setText(firstname);
         obitTown.setText(thisTown);
-        if(!thisTown.equals(dbTown))
+        if ( !thisTown.equals(dbTown) )
+        {
             obitTown.setForeground(Color.red);
+        }
         else
-             obitTown.setForeground(Color.DARK_GRAY);
-        if( ((Deceased)jList1.getSelectedValue()).getMI()!=null && dbList.get(index).getMI()!=null )
-         if(!((Deceased) jList1.getSelectedValue()).getMI().substring(0,0).equals(dbList.get(index).getMI().substring(0, 0)))
-            obitMiddle.setForeground(Color.red);
-        else
-             obitMiddle.setForeground(Color.DARK_GRAY);
+        {
+            obitTown.setForeground(Color.DARK_GRAY);
+        }
+        if ( ( ( Deceased ) jList1.getSelectedValue() ).getMI() != null &&
+          dbList.get(index).getMI() != null )
+        {
+            if ( !( ( Deceased ) jList1.getSelectedValue() ).getMI().substring(0, 0).equals(dbList.
+              get(index).getMI().substring(0, 0)) )
+            {
+                obitMiddle.setForeground(Color.red);
+            }
+            else
+            {
+                obitMiddle.setForeground(Color.DARK_GRAY);
+            }
+        }
         jLayeredPane1.setVisible(toggleVisibility);
 
 
@@ -351,15 +435,55 @@ public class SMGUI extends javax.swing.JFrame
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_submitButtonActionPerformed
     {//GEN-HEADEREND:event_submitButtonActionPerformed
 
-        int choice = JOptionPane.showConfirmDialog(null,  "Are You Sure?");
-        if(choice == 0)
+        int choice = JOptionPane.showConfirmDialog(null, "Are You Sure?");
+        if ( choice == 0 )
         {
             database = new MySqlConnection();
-           database.submit(dbList.get(jList1.getSelectedIndex()));
+
+            database.submit(dbList.get(jList1.getSelectedIndex()), ( ( Deceased ) jList1.
+              getSelectedValue() ).getPicture());
+
+
         }
 
 
     }//GEN-LAST:event_submitButtonActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
+    {//GEN-HEADEREND:event_jButton3ActionPerformed
+        if ( !Mgmt.isVisible() )
+        {
+
+            Mgmt.setVisible(true);
+            jLayeredPane1.setVisible(false);
+            jToggleButton1.setVisible(false);
+            jButton1.setVisible(false);
+            jButton2.setVisible(false);
+            database = new MySqlConnection();
+            MgmtList.setListData(database.GetConfirmedList().toArray());
+            submitButton.setVisible(false);
+            MgmtList.setCellRenderer(new MyCellRenderer2());
+            jProgressBar1.setVisible(false);
+
+
+            jButton3.setText("Back");
+        }
+        else
+        {
+            Mgmt.setVisible(false);
+            jLayeredPane1.setVisible(true);
+            if ( hasBeenToggled )
+            {
+                jToggleButton1.setVisible(true);
+            }
+            jButton1.setVisible(true);
+            jButton2.setVisible(true);
+            jButton3.setText("Manager Page");
+            submitButton.setVisible(true);
+            jProgressBar1.setVisible(true);
+
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -420,6 +544,8 @@ public class SMGUI extends javax.swing.JFrame
     private javax.swing.JLabel DatabaseLName;
     private javax.swing.JLabel DbFName;
     private javax.swing.JLabel DbTown;
+    private javax.swing.JLayeredPane Mgmt;
+    private javax.swing.JList MgmtList;
     private javax.swing.JLabel ObitFname;
     private javax.swing.JLabel ObitLName;
     private javax.swing.JLabel Title;
@@ -427,15 +553,20 @@ public class SMGUI extends javax.swing.JFrame
     private javax.swing.JLabel dbMiddle;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLayeredPane jLayeredPane2;
+    private javax.swing.JLayeredPane jLayeredPane3;
     private javax.swing.JList jList1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel obitMiddle;
     private javax.swing.JLabel obitTown;
@@ -460,13 +591,13 @@ public class SMGUI extends javax.swing.JFrame
             switch ( jSoupList.get(index).getLikelihood() )
             {
                 case 1:
-                    setForeground(Color.red);
+                    setForeground(new Color(0xc0, 0x00, 0x00));
                     break;
                 case 2:
-                    setForeground(Color.yellow);
+                    setForeground(new Color(0xC0, 0xC0, 0x00));
                     break;
                 case 3:
-                    setForeground(Color.GREEN);
+                    setForeground(new Color(0x00, 0xC0, 0x00));
                     break;
             }
 
@@ -483,6 +614,57 @@ public class SMGUI extends javax.swing.JFrame
                 catch ( Exception e )
                 {
                     System.out.println(e.toString());
+                }
+
+            }
+            else
+            {
+
+                setBackground(list.getBackground());
+
+            }
+            setEnabled(list.isEnabled());
+            setFont(list.getFont());
+            setOpaque(true);
+            return this;
+        }
+    }
+
+    class MyCellRenderer2 extends JLabel implements ListCellRenderer<Object>
+    {
+        public Component getListCellRendererComponent(
+          JList<?> list, // the list
+          Object value, // value to display
+          int index, // cell index
+          boolean isSelected, // is the cell selected
+          boolean cellHasFocus )    // does the cell have focus
+        {
+            String s = value.toString();
+            setText(s);
+
+            setBackground(list.getSelectionBackground());
+            setForeground(list.getSelectionForeground());
+
+            if ( isSelected )
+            {
+
+                try
+                {
+                    URL where = new URL(
+                      ( ( ( Deceased ) MgmtList.getSelectedValue() ).getPicture() ));
+
+                    ImageIcon picture = null;
+                    if ( where != null )
+                    {
+                        picture = new ImageIcon(where);
+                    }
+
+                    jLabel2.setIcon(picture);
+
+                }
+                catch ( Exception e )
+                {
+                    //System.out.println(e.toString());
                 }
 
             }

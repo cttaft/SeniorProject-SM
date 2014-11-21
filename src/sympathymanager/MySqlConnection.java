@@ -14,6 +14,11 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 
+
+import javax.swing.JOptionPane;
+
+
+
 /**
  *
  * @author Charlie
@@ -70,19 +75,44 @@ public class MySqlConnection
 
     private void writeResultSet( ResultSet resultSet ) throws SQLException
     {
-        // resultSet is initialised before the first data set
+
         while ( resultSet.next() )
         {
-            // it is possible to get the columns via name
-            // also possible to get the columns via the column number
-            // which starts at 1
-            // e.g., resultSet.getSTring(2);
+
 
             String firstName = resultSet.getString("FirstName");
             String MiddleInitial = resultSet.getString("MiddleInitial");
             String lastName = resultSet.getString("LastName");
             String ID = resultSet.getString("ID");
-            dataDeathList.add(new BGDeceased(firstName, lastName, MiddleInitial, ID));
+
+
+            Deceased tempDeceased = new BGDeceased(firstName, lastName, MiddleInitial, ID);
+
+            dataDeathList.add(tempDeceased);
+
+
+        }
+    }
+       private void writeConfirmedResultSet( ResultSet resultSet ) throws SQLException
+    {
+
+        while ( resultSet.next() )
+        {
+
+
+            String firstName = resultSet.getString("FirstName");
+            String MiddleInitial = resultSet.getString("MiddleInitial");
+            String lastName = resultSet.getString("LastName");
+            String ID = resultSet.getString("ID");
+            String date = resultSet.getString("ConfirmedDead.Date").substring(0, 10);
+           String picUrl = resultSet.getString("ConfirmedDead.PictureUrl");
+
+            Deceased tempDeceased = new BGDeceased(firstName, lastName, MiddleInitial, ID);
+            if(date!=null)
+             tempDeceased.setDate(date);
+            if(picUrl!=null)
+                tempDeceased.setPicture(picUrl);
+            dataDeathList.add(tempDeceased);
 
 
         }
@@ -250,19 +280,40 @@ public class MySqlConnection
 
     }
 
-    public void submit(Deceased dead)
+    public void submit(Deceased dead, String picture)
     {
         try{
-            String submitSQL = "insert into DEATHCHECKER.ConfirmedDead ( MemberId)"
-        + " values ( ?)";
+            String submitSQL = "insert into DEATHCHECKER.ConfirmedDead ( MemberId, PictureUrl)"
+        + " values ( ?, ?)";
             preparedStatement = connect.prepareStatement(submitSQL);
 
             preparedStatement.setInt(1, Integer.parseInt(dead.getId()));
+             preparedStatement.setString(2, picture);
             preparedStatement
                       .execute();
         }catch(Exception e)
         {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public ArrayList<Deceased> GetConfirmedList()
+    {
+        try{
+         String nameSQL = "select * from DEATHCHECKER.MEMBERLIST, DEATHCHECKER.CONFIRMEDDEAD Where MEMBERLIST.ID = CONFIRMEDDEAD.MEMBERID Order By CONFIRMEDDEAD.Date Desc ";
+            preparedStatement = connect.prepareStatement(nameSQL);
+
+            resultSet = preparedStatement
+              .executeQuery();
+            writeConfirmedResultSet(resultSet);
+
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally{
+             return dataDeathList;
         }
     }
 
@@ -276,6 +327,7 @@ public class MySqlConnection
         }
         catch ( Exception e )
         {
+
         }
     }
 }

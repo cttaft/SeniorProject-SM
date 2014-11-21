@@ -5,6 +5,9 @@
 package sympathymanager;
 
 
+import java.awt.Color;
+
+
 /**
  *
  * @author Charlie
@@ -17,7 +20,9 @@ public class SympathyManager
     public static void main( String[] args )
     {
         SMGUI smg = new SMGUI();
+       
         smg.setVisible(true);
+
 
 
     }

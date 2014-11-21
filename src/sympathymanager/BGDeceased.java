@@ -5,6 +5,9 @@
 package sympathymanager;
 
 
+import java.util.Date;
+
+
 /**
  *
  * @author Charlie
@@ -19,6 +22,7 @@ public class BGDeceased implements Deceased
     private String picture;
     private int likelihood;
     private String id;
+    private String date;
 
     public BGDeceased()
     {
@@ -168,8 +172,32 @@ public class BGDeceased implements Deceased
         return id;
     }
 
+    public void setDate(String date)
+    {
+        this.date = date;
+    }
+    public String getDate()
+    {
+        return this.date;
+    }
     public String toString()
     {
-        return String.format("%s|%s|%s|\n", firstName, mInitial, lastName);
+        if(mInitial!=null && date!=null)
+            return String.format("%s %s.%s|%s\n", firstName, mInitial, lastName, date);
+        else if(date==null && mInitial!=null)
+            return String.format("%s %s. %s\n", firstName, mInitial, lastName);
+        else if(date!=null && mInitial == null)
+             return String.format("%s %s|%s\n", firstName,  lastName, date);
+        else
+             return String.format("%s %s\n", firstName,  lastName);
+
     }
+    public boolean equals(Object Dead )
+    {
+        if(((BGDeceased)Dead).getFname().equalsIgnoreCase(this.firstName)  && ((BGDeceased)Dead).getLName().equalsIgnoreCase(this.lastName) )
+            return true;
+        return false;
+    }
+
+
 }

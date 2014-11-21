@@ -5,6 +5,9 @@
 
 package sympathymanager;
 
+
+import java.util.Date;
+
 /**
  *
  * @author Charlie
@@ -28,5 +31,9 @@ public interface Deceased {
        public int getLikelihood();
        public void setId(String id);
        public String getId();
+       public void setDate(String date);
+       public String getDate();
+     
+
 
 }
