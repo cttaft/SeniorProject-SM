@@ -47,6 +47,8 @@ public class SMGUI extends javax.swing.JFrame
         jLayeredPane2.setVisible(false);
         jToggleButton1.setVisible(false);
         submitButton.setVisible(false);
+        SympathyEmails.setVisible(false);
+        CancelPayment.setVisible(false);
         try
         {
             java.net.URL imgURL = new URL(
@@ -101,6 +103,8 @@ public class SMGUI extends javax.swing.JFrame
         jScrollPane2 = new javax.swing.JScrollPane();
         MgmtList = new javax.swing.JList();
         jButton3 = new javax.swing.JButton();
+        SympathyEmails = new javax.swing.JButton();
+        CancelPayment = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -263,6 +267,26 @@ public class SMGUI extends javax.swing.JFrame
                 }
             });
             getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 140, 30));
+
+            SympathyEmails.setText("Send Sympathy Emails");
+            SympathyEmails.addActionListener(new java.awt.event.ActionListener()
+            {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                {
+                    SympathyEmailsActionPerformed(evt);
+                }
+            });
+            getContentPane().add(SympathyEmails, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 170, 30));
+
+            CancelPayment.setText("Cancel Payments");
+            CancelPayment.addActionListener(new java.awt.event.ActionListener()
+            {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                {
+                    CancelPaymentActionPerformed(evt);
+                }
+            });
+            getContentPane().add(CancelPayment, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 150, 30));
 
             pack();
         }// </editor-fold>//GEN-END:initComponents
@@ -435,6 +459,10 @@ public class SMGUI extends javax.swing.JFrame
             if(success)
             {
                 JOptionPane.showMessageDialog(null, "Success");
+                Deceased toDelete = dbList.get(jList1.getSelectedIndex());
+                dbList.remove(jList1.getSelectedIndex());
+                jSoupList.remove(toDelete);
+                jList1.setListData(jSoupList.toArray());
             }
 
         }
@@ -459,6 +487,8 @@ public class SMGUI extends javax.swing.JFrame
             submitButton.setVisible(false);
             MgmtList.setCellRenderer(new MyCellRenderer2());
             jProgressBar1.setVisible(false);
+            SympathyEmails.setVisible(true);
+        CancelPayment.setVisible(true);
 
 
             jButton3.setText("Back");
@@ -476,9 +506,24 @@ public class SMGUI extends javax.swing.JFrame
             jButton3.setText("Manager Page");
             submitButton.setVisible(true);
             jProgressBar1.setVisible(true);
-
+            SympathyEmails.setVisible(false);
+        CancelPayment.setVisible(false);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void SympathyEmailsActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_SympathyEmailsActionPerformed
+    {//GEN-HEADEREND:event_SympathyEmailsActionPerformed
+       JOptionPane.showMessageDialog(null, "Email Sent");
+    }//GEN-LAST:event_SympathyEmailsActionPerformed
+
+    private void CancelPaymentActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CancelPaymentActionPerformed
+    {//GEN-HEADEREND:event_CancelPaymentActionPerformed
+         int choice = JOptionPane.showConfirmDialog(null, "Are You Sure?");
+        if ( choice == 0 )
+        {
+        JOptionPane.showMessageDialog(null, "Payments Cancelled");
+        }
+    }//GEN-LAST:event_CancelPaymentActionPerformed
 
     /**
      * @param args the command line arguments
@@ -536,6 +581,7 @@ public class SMGUI extends javax.swing.JFrame
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton CancelPayment;
     private javax.swing.JLabel DatabaseLName;
     private javax.swing.JLabel DbFName;
     private javax.swing.JLabel DbTown;
@@ -543,6 +589,7 @@ public class SMGUI extends javax.swing.JFrame
     private javax.swing.JList MgmtList;
     private javax.swing.JLabel ObitFname;
     private javax.swing.JLabel ObitLName;
+    private javax.swing.JButton SympathyEmails;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel compareNameLabel;
     private javax.swing.JLabel dbMiddle;
