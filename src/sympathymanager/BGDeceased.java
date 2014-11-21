@@ -194,8 +194,9 @@ public class BGDeceased implements Deceased
     }
     public boolean equals(Object Dead )
     {
-        if(((BGDeceased)Dead).getFname().equalsIgnoreCase(this.firstName)  && ((BGDeceased)Dead).getLName().equalsIgnoreCase(this.lastName) )
-            return true;
+        if(((BGDeceased)Dead).getFname().trim().equalsIgnoreCase(this.firstName.trim())  &&
+          ((BGDeceased)Dead).getLName().trim().equalsIgnoreCase(this.lastName.trim()) )
+        {return true;}
         return false;
     }
 

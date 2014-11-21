@@ -262,7 +262,7 @@ public class SMGUI extends javax.swing.JFrame
                     jButton3ActionPerformed(evt);
                 }
             });
-            getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 110, 30));
+            getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 140, 30));
 
             pack();
         }// </editor-fold>//GEN-END:initComponents
@@ -290,26 +290,16 @@ public class SMGUI extends javax.swing.JFrame
                 try
                 {
                     jSoupList = get();
+
                     jProgressBar1.setIndeterminate(false);
                     if ( !jSoupList.isEmpty() )
                     {
                         database = new MySqlConnection();
                         ArrayList<Deceased> confirmed = database.GetConfirmedList();
-                        ArrayList<Deceased> toDelete = new ArrayList<Deceased>();
+
                         MgmtList.setListData(confirmed.toArray());
-                        dbList = bc.getDbList();
-                        for ( Deceased dead : jSoupList )
-                        {
-                            if ( confirmed.contains(dead) )
-                            {
-                                toDelete.add(dead);
-                            }
-                        }
-                        for ( Deceased dead : toDelete )
-                        {
-                            jSoupList.remove(dead);
-                            dbList.remove(dead);
-                        }
+
+                         dbList = bc.getDbList();
                         jList1.setListData(jSoupList.toArray());
                         jList1.setSelectedIndex(0);
                         jList1.setToolTipText(String.format("%s", jSoupList.get(jList1.
@@ -440,11 +430,16 @@ public class SMGUI extends javax.swing.JFrame
         {
             database = new MySqlConnection();
 
-            database.submit(dbList.get(jList1.getSelectedIndex()), ( ( Deceased ) jList1.
+            boolean success = database.submit(dbList.get(jList1.getSelectedIndex()), ( ( Deceased ) jList1.
               getSelectedValue() ).getPicture());
-
+            if(success)
+            {
+                JOptionPane.showMessageDialog(null, "Success");
+            }
 
         }
+
+
 
 
     }//GEN-LAST:event_submitButtonActionPerformed

@@ -280,7 +280,7 @@ public class MySqlConnection
 
     }
 
-    public void submit(Deceased dead, String picture)
+    public boolean submit(Deceased dead, String picture)
     {
         try{
             String submitSQL = "insert into DEATHCHECKER.ConfirmedDead ( MemberId, PictureUrl)"
@@ -291,11 +291,14 @@ public class MySqlConnection
              preparedStatement.setString(2, picture);
             preparedStatement
                       .execute();
+
         }catch(Exception e)
         {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
+        return true;
     }
 
     public ArrayList<Deceased> GetConfirmedList()

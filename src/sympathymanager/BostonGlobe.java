@@ -53,6 +53,7 @@ public class BostonGlobe implements ConnectToPaper
         {
             DeceasedList.add(new BGDeceased(obitNames.get(count).text()));
         }
+
         getURLS();
         for(Deceased dead: DeceasedList)
         {
@@ -63,6 +64,23 @@ public class BostonGlobe implements ConnectToPaper
                 dbList.add(dbDead);
             }
         }
+         ArrayList<Deceased> toDelete = new ArrayList<Deceased>();
+         msc = new MySqlConnection();
+        ArrayList<Deceased> confirmed = msc.GetConfirmedList();
+
+              for ( Deceased dead : MatchList )
+                        {
+                            if ( confirmed.contains(dead) )
+                            {
+                                toDelete.add(dead);
+                            }
+                        }
+                        for ( Deceased dead : toDelete )
+                        {
+                            MatchList.remove(dead);
+                            dbList.remove(dead);
+
+                        }
         for( Deceased dead: MatchList)
         {
            // dead.setTown(getTowns(DeceasedList.indexOf(dead)));
@@ -70,6 +88,7 @@ public class BostonGlobe implements ConnectToPaper
             dead.setPicture(getPictures(dead.getURL()));
 
         }
+
         for(Deceased dead: MatchList)
         {
             msc.findMatch(dead);
@@ -102,9 +121,6 @@ public class BostonGlobe implements ConnectToPaper
 
 
         ArrayList<String> picURLlist = new ArrayList<String>();
-
-
-
 
         for ( int i = 0; i < URLlist.size(); i++ )
         {
