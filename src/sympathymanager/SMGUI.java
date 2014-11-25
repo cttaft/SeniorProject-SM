@@ -43,12 +43,15 @@ public class SMGUI extends javax.swing.JFrame
     {
 
         initComponents();
+
+        jLayeredPane1.setVisible(true);
         Mgmt.setVisible(false);
         jLayeredPane2.setVisible(false);
-        jToggleButton1.setVisible(false);
+        Compare.setVisible(false);
         submitButton.setVisible(false);
         SympathyEmails.setVisible(false);
         CancelPayment.setVisible(false);
+          Revert.setVisible(false);
         try
         {
             java.net.URL imgURL = new URL(
@@ -79,7 +82,6 @@ public class SMGUI extends javax.swing.JFrame
         jLabel2 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
         Title = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
@@ -105,6 +107,8 @@ public class SMGUI extends javax.swing.JFrame
         jButton3 = new javax.swing.JButton();
         SympathyEmails = new javax.swing.JButton();
         CancelPayment = new javax.swing.JButton();
+        Revert = new javax.swing.JButton();
+        Compare = new javax.swing.JToggleButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -123,7 +127,7 @@ public class SMGUI extends javax.swing.JFrame
         setForeground(java.awt.Color.white);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Find Obits");
+        jButton1.setText("Search");
         jButton1.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -142,16 +146,6 @@ public class SMGUI extends javax.swing.JFrame
         Title.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
         Title.setText("Sympathy Manager");
         getContentPane().add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 260, 34));
-
-        jToggleButton1.setText("Compare");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jToggleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
 
         jList1.setModel(new javax.swing.AbstractListModel()
             {
@@ -235,7 +229,7 @@ public class SMGUI extends javax.swing.JFrame
 
             getContentPane().add(jLayeredPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 85, 420, 180));
 
-            submitButton.setText("Submit");
+            submitButton.setText("Confirm");
             submitButton.addActionListener(new java.awt.event.ActionListener()
             {
                 public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -288,6 +282,26 @@ public class SMGUI extends javax.swing.JFrame
             });
             getContentPane().add(CancelPayment, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 150, 30));
 
+            Revert.setText("Revert");
+            Revert.addActionListener(new java.awt.event.ActionListener()
+            {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                {
+                    RevertActionPerformed(evt);
+                }
+            });
+            getContentPane().add(Revert, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 293, 130, 60));
+
+            Compare.setText("Compare");
+            Compare.addActionListener(new java.awt.event.ActionListener()
+            {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                {
+                    CompareActionPerformed(evt);
+                }
+            });
+            getContentPane().add(Compare, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
+
             pack();
         }// </editor-fold>//GEN-END:initComponents
 
@@ -330,7 +344,7 @@ public class SMGUI extends javax.swing.JFrame
                           getSelectedIndex()).
                           getFname()));
                         jList1.setCellRenderer(new MyCellRenderer());
-                        jToggleButton1.setVisible(true);
+                        Compare.setVisible(true);
                         hasBeenToggled = true;
 
 
@@ -378,57 +392,6 @@ public class SMGUI extends javax.swing.JFrame
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jToggleButton1ActionPerformed
-    {//GEN-HEADEREND:event_jToggleButton1ActionPerformed
-        boolean toggleVisibility = false;
-        if ( !jLayeredPane1.isVisible() )
-        {
-            toggleVisibility = true;
-        }
-        int index = jList1.getSelectedIndex();
-        String lastname = ( jSoupList.get(index) ).getLName();
-        String firstname = ( jSoupList.get(index) ).getFname();
-        String dbLName = dbList.get(index).getLName();
-        String dbfName = dbList.get(index).getFname();
-        String thisTown = ( jSoupList.get(index) ).getTown();
-        String dbTown = dbList.get(index).getTown();
-        DatabaseLName.setText(dbLName);
-        DbFName.setText(dbfName);
-        DbTown.setText(dbList.get(index).getTown());
-        dbMiddle.setText(( ( Deceased ) jList1.getSelectedValue() ).getMI());
-        obitMiddle.setText(dbList.get(index).getMI());
-        ObitLName.setText(lastname);
-        ObitFname.setText(firstname);
-        obitTown.setText(thisTown);
-        if ( !thisTown.equals(dbTown) )
-        {
-            obitTown.setForeground(Color.red);
-        }
-        else
-        {
-            obitTown.setForeground(Color.DARK_GRAY);
-        }
-        if ( ( ( Deceased ) jList1.getSelectedValue() ).getMI() != null &&
-          dbList.get(index).getMI() != null )
-        {
-            if ( !( ( Deceased ) jList1.getSelectedValue() ).getMI().substring(0, 0).equals(dbList.
-              get(index).getMI().substring(0, 0)) )
-            {
-                obitMiddle.setForeground(Color.red);
-            }
-            else
-            {
-                obitMiddle.setForeground(Color.DARK_GRAY);
-            }
-        }
-        jLayeredPane1.setVisible(toggleVisibility);
-
-
-        jLayeredPane2.setVisible(!toggleVisibility);
-        jButton1.setVisible(toggleVisibility);
-        jProgressBar1.setVisible(toggleVisibility);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton2ActionPerformed
     {//GEN-HEADEREND:event_jButton2ActionPerformed
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
@@ -463,6 +426,7 @@ public class SMGUI extends javax.swing.JFrame
                 dbList.remove(jList1.getSelectedIndex());
                 jSoupList.remove(toDelete);
                 jList1.setListData(jSoupList.toArray());
+                jList1.setSelectedIndex(0);
             }
 
         }
@@ -478,17 +442,19 @@ public class SMGUI extends javax.swing.JFrame
         {
 
             Mgmt.setVisible(true);
+            Compare.setVisible(false);
             jLayeredPane1.setVisible(false);
-            jToggleButton1.setVisible(false);
             jButton1.setVisible(false);
             jButton2.setVisible(false);
             database = new MySqlConnection();
             MgmtList.setListData(database.GetConfirmedList().toArray());
             submitButton.setVisible(false);
             MgmtList.setCellRenderer(new MyCellRenderer2());
+            MgmtList.setSelectedIndex(0);
             jProgressBar1.setVisible(false);
             SympathyEmails.setVisible(true);
         CancelPayment.setVisible(true);
+        Revert.setVisible(true);
 
 
             jButton3.setText("Back");
@@ -499,7 +465,7 @@ public class SMGUI extends javax.swing.JFrame
             jLayeredPane1.setVisible(true);
             if ( hasBeenToggled )
             {
-                jToggleButton1.setVisible(true);
+                Compare.setVisible(true);
             }
             jButton1.setVisible(true);
             jButton2.setVisible(true);
@@ -508,6 +474,7 @@ public class SMGUI extends javax.swing.JFrame
             jProgressBar1.setVisible(true);
             SympathyEmails.setVisible(false);
         CancelPayment.setVisible(false);
+          Revert.setVisible(false);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -524,6 +491,71 @@ public class SMGUI extends javax.swing.JFrame
         JOptionPane.showMessageDialog(null, "Payments Cancelled");
         }
     }//GEN-LAST:event_CancelPaymentActionPerformed
+
+    private void RevertActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_RevertActionPerformed
+    {//GEN-HEADEREND:event_RevertActionPerformed
+       int choice = JOptionPane.showConfirmDialog(null, "Are You Sure?");
+        if ( choice == 0 )
+        {
+            database = new MySqlConnection();
+       database.revert(((Deceased)(MgmtList.getSelectedValue())).getId());
+       MgmtList.setListData(database.GetConfirmedList().toArray());
+            JOptionPane.showMessageDialog(null, "Successfully Reverted");
+            MgmtList.setSelectedIndex(0);
+
+        }
+
+    }//GEN-LAST:event_RevertActionPerformed
+
+    private void CompareActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_CompareActionPerformed
+    {//GEN-HEADEREND:event_CompareActionPerformed
+        boolean toggleVisibility = false;
+        if ( !jLayeredPane1.isVisible() )
+        {
+            toggleVisibility = true;
+        }
+        int index = jList1.getSelectedIndex();
+        String lastname = ( jSoupList.get(index) ).getLName();
+        String firstname = ( jSoupList.get(index) ).getFname();
+        String dbLName = dbList.get(index).getLName();
+        String dbfName = dbList.get(index).getFname();
+        String thisTown = ( jSoupList.get(index) ).getTown();
+        String dbTown = dbList.get(index).getTown();
+        DatabaseLName.setText(dbLName);
+        DbFName.setText(dbfName);
+        DbTown.setText(dbList.get(index).getTown());
+        dbMiddle.setText(( ( Deceased ) jList1.getSelectedValue() ).getMI());
+        obitMiddle.setText(dbList.get(index).getMI());
+        ObitLName.setText(lastname);
+        ObitFname.setText(firstname);
+        obitTown.setText(thisTown);
+        if(!thisTown.equals(dbList.get(index).getTown()))
+        {
+            obitTown.setForeground(Color.red);
+        }
+        else
+        {
+            obitTown.setForeground(Color.DARK_GRAY);
+        }
+        if ( ( ( Deceased ) jList1.getSelectedValue() ).getMI() != null &&
+            dbList.get(index).getMI() != null )
+        {
+            if ( !( ( Deceased ) jList1.getSelectedValue() ).getMI().substring(0, 0).equals(dbList.
+                get(index).getMI().substring(0, 0)) )
+        {
+            obitMiddle.setForeground(Color.red);
+        }
+        else
+        {
+            obitMiddle.setForeground(Color.DARK_GRAY);
+        }
+        }
+        jLayeredPane1.setVisible(toggleVisibility);
+
+        jLayeredPane2.setVisible(!toggleVisibility);
+        jButton1.setVisible(toggleVisibility);
+        jProgressBar1.setVisible(toggleVisibility);
+    }//GEN-LAST:event_CompareActionPerformed
 
     /**
      * @param args the command line arguments
@@ -582,6 +614,7 @@ public class SMGUI extends javax.swing.JFrame
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton CancelPayment;
+    private javax.swing.JToggleButton Compare;
     private javax.swing.JLabel DatabaseLName;
     private javax.swing.JLabel DbFName;
     private javax.swing.JLabel DbTown;
@@ -589,6 +622,7 @@ public class SMGUI extends javax.swing.JFrame
     private javax.swing.JList MgmtList;
     private javax.swing.JLabel ObitFname;
     private javax.swing.JLabel ObitLName;
+    private javax.swing.JButton Revert;
     private javax.swing.JButton SympathyEmails;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel compareNameLabel;
@@ -609,7 +643,6 @@ public class SMGUI extends javax.swing.JFrame
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel obitMiddle;
     private javax.swing.JLabel obitTown;
     private javax.swing.JButton submitButton;
@@ -626,6 +659,7 @@ public class SMGUI extends javax.swing.JFrame
         {
             String s = value.toString();
             setText(s);
+            if(jSoupList.size() > 1 )
             setToolTipText(String.format("%s has a likelihood of %d", jSoupList.get(index).
               getFname(), jSoupList.get(index).getLikelihood()));
             setBackground(list.getSelectionBackground());

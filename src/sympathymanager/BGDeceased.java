@@ -53,7 +53,8 @@ public class BGDeceased implements Deceased
         {
             setMI(" ");
         }
-        setTown(town[1]);
+        if(town.length > 1)
+         setTown(town[1]);
     }
 
     public BGDeceased( String first, String last, String MI )
@@ -183,16 +184,16 @@ public class BGDeceased implements Deceased
     public String toString()
     {
         if(mInitial!=null && date!=null)
-            return String.format("%s %s.%s|%s\n", firstName, mInitial, lastName, date);
+            return String.format("%s %s. %s\n", firstName, mInitial, lastName);
         else if(date==null && mInitial!=null)
             return String.format("%s %s. %s\n", firstName, mInitial, lastName);
         else if(date!=null && mInitial == null)
-             return String.format("%s %s|%s\n", firstName,  lastName, date);
+             return String.format("%s %s\n", firstName,  lastName);
         else
              return String.format("%s %s\n", firstName,  lastName);
 
     }
-    public boolean equals(Object Dead )
+    public boolean equals(Object Dead)
     {
         if(((BGDeceased)Dead).getFname().trim().equalsIgnoreCase(this.firstName.trim())  &&
           ((BGDeceased)Dead).getLName().trim().equalsIgnoreCase(this.lastName.trim()) )
