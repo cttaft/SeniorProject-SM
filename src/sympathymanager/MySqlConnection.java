@@ -146,7 +146,7 @@ public class MySqlConnection
     {
         try
         {
-            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName)  LIKE ? and LOWER(LastName) LIKE ?";
+            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(Trim(FirstName))  LIKE ? and LOWER(Trim(LastName)) LIKE ?";
             preparedStatement = connect.prepareStatement(nameSQL);
             preparedStatement.setString(1, person.getFname().toLowerCase());
             preparedStatement.setString(2, person.getLName().toLowerCase());
@@ -180,10 +180,10 @@ public class MySqlConnection
     {
         try
         {
-            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName)  LIKE ? and LOWER(LastName) LIKE ?";
+            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(Trim(FirstName))  LIKE ? and LOWER(Trim(LastName)) LIKE ?";
             preparedStatement = connect.prepareStatement(nameSQL);
-            preparedStatement.setString(1, "%" + person.getFname().toLowerCase() + "%");
-            preparedStatement.setString(2, "%" + person.getLName().toLowerCase() + "%");
+            preparedStatement.setString(1, "%" + person.getFname().toLowerCase().trim() + "%");
+            preparedStatement.setString(2, "%" + person.getLName().toLowerCase().trim() + "%");
             resultSet = preparedStatement
               .executeQuery();
             if ( !resultSet.next() )
@@ -209,10 +209,10 @@ public class MySqlConnection
     {
         try
         {
-            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName)  LIKE ? and LOWER(LastName) LIKE ?";
+            String nameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(Trim(FirstName))  LIKE ? and LOWER(Trim(LastName)) LIKE ?";
             preparedStatement = connect.prepareStatement(nameSQL);
-            preparedStatement.setString(1, "%" + person.getFname().toLowerCase() + "%");
-            preparedStatement.setString(2, "%" + person.getLName().toLowerCase() + "%");
+            preparedStatement.setString(1, "%" + person.getFname().toLowerCase().trim() + "%");
+            preparedStatement.setString(2, "%" + person.getLName().toLowerCase().trim() + "%");
             resultSet = preparedStatement
               .executeQuery();
             if ( !resultSet.next() )
@@ -223,22 +223,22 @@ public class MySqlConnection
             else
             {
                 person.setLikelihood(1);
-                String middleNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName) LIKE ? and LOWER(LastName) COLLATE UTF8_GENERAL_CI LIKE ? and LOWER(MiddleInitial) LIKE ?";
+                String middleNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(Trim(FirstName)) LIKE ? and LOWER(Trim(LastName)) COLLATE UTF8_GENERAL_CI LIKE ? and LOWER(Trim(MiddleInitial)) LIKE ?";
                 preparedStatement = connect.prepareStatement(middleNameSQL);
-                preparedStatement.setString(1, "%" + person.getFname().toLowerCase() + "%");
-                preparedStatement.setString(2, "%" + person.getLName().toLowerCase() + "%");
-                preparedStatement.setString(3, "%" + person.getMI().toLowerCase() + "%");
+                preparedStatement.setString(1, "%" + person.getFname().toLowerCase().trim() + "%");
+                preparedStatement.setString(2, "%" + person.getLName().toLowerCase().trim() + "%");
+                preparedStatement.setString(3, "%" + person.getMI().toLowerCase().trim() + "%");
                 resultSet = preparedStatement
                   .executeQuery();
                 if ( resultSet.next() )
                 {
                     person.setLikelihood(2);
-                    String townNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName) LIKE ? and LOWER(LastName) LIKE ? and Lower(middleInitial) LIKE ? and LOWER(Town) LIKE ?";
+                    String townNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(Trim(FirstName)) LIKE ? and LOWER(Trim(LastName)) LIKE ? and Lower(Trim(middleInitial)) LIKE ? and LOWER(Trim(Town)) LIKE ?";
                     preparedStatement = connect.prepareStatement(townNameSQL);
-                    preparedStatement.setString(1, "%" + person.getFname().toLowerCase() + "%");
-                    preparedStatement.setString(2, "%" + person.getLName().toLowerCase() + "%");
-                    preparedStatement.setString(3, "%" + person.getMI().toLowerCase() + "%");
-                    preparedStatement.setString(4, person.getTown().toLowerCase());
+                    preparedStatement.setString(1, "%" + person.getFname().toLowerCase().trim() + "%");
+                    preparedStatement.setString(2, "%" + person.getLName().toLowerCase().trim() + "%");
+                    preparedStatement.setString(3, "%" + person.getMI().toLowerCase().trim() + "%");
+                    preparedStatement.setString(4, person.getTown().toLowerCase().trim());
                     resultSet = preparedStatement
                       .executeQuery();
                     if ( resultSet.next() )
@@ -249,11 +249,11 @@ public class MySqlConnection
                 }
                 else
                 {
-                    String townNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(FirstName) LIKE ? and LOWER(LastName) LIKE ? and LOWER(Town) LIKE ?";
+                    String townNameSQL = "select * from DEATHCHECKER.MEMBERLIST Where LOWER(Trim(FirstName)) LIKE ? and LOWER(Trim(LastName)) LIKE ? and LOWER(Trim(Town)) LIKE ?";
                     preparedStatement = connect.prepareStatement(townNameSQL);
-                    preparedStatement.setString(1, "%" + person.getFname().toLowerCase() + "%");
-                    preparedStatement.setString(2, "%" + person.getLName().toLowerCase() + "%");
-                    preparedStatement.setString(3, "%" + person.getTown().toLowerCase() + "%");
+                    preparedStatement.setString(1, "%" + person.getFname().toLowerCase().trim() + "%");
+                    preparedStatement.setString(2, "%" + person.getLName().toLowerCase().trim() + "%");
+                    preparedStatement.setString(3, "%" + person.getTown().toLowerCase().trim() + "%");
                     resultSet = preparedStatement
                       .executeQuery();
                     if ( resultSet.next() )
@@ -289,6 +289,27 @@ public class MySqlConnection
 
             preparedStatement.setInt(1, Integer.parseInt(dead.getId()));
              preparedStatement.setString(2, picture);
+            preparedStatement
+                      .execute();
+
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
+     public boolean revert(String id)
+    {
+        try{
+            String deleteSQL = "delete from DEATHCHECKER.ConfirmedDead where memberid = ?"
+       ;
+            preparedStatement = connect.prepareStatement(deleteSQL);
+
+            preparedStatement.setString(1, id);
+
             preparedStatement
                       .execute();
 
