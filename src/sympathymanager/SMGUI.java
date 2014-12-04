@@ -521,14 +521,14 @@ public class SMGUI extends javax.swing.JFrame
         String dbfName = dbList.get(index).getFname();
         String thisTown = ( jSoupList.get(index) ).getTown();
         String dbTown = dbList.get(index).getTown();
-        DatabaseLName.setText(dbLName);
-        DbFName.setText(dbfName);
-        DbTown.setText(dbList.get(index).getTown());
+        DatabaseLName.setText(lastname);
+        DbFName.setText(firstname);
+        DbTown.setText(thisTown);
         dbMiddle.setText(( ( Deceased ) jList1.getSelectedValue() ).getMI());
         obitMiddle.setText(dbList.get(index).getMI());
-        ObitLName.setText(lastname);
-        ObitFname.setText(firstname);
-        obitTown.setText(thisTown);
+        ObitLName.setText(dbLName);
+        ObitFname.setText(dbfName);
+        obitTown.setText(dbList.get(index).getTown());
         if(!thisTown.equals(dbList.get(index).getTown()))
         {
             obitTown.setForeground(Color.red);
@@ -540,14 +540,13 @@ public class SMGUI extends javax.swing.JFrame
         if ( ( ( Deceased ) jList1.getSelectedValue() ).getMI() != null &&
             dbList.get(index).getMI() != null )
         {
-            if ( !( ( Deceased ) jList1.getSelectedValue() ).getMI().substring(0, 0).equals(dbList.
-                get(index).getMI().substring(0, 0)) )
+            if ( jSoupList.get(index).getMI().charAt(0) == dbList.get(index).getMI().charAt(0) )
         {
-            obitMiddle.setForeground(Color.red);
+            obitMiddle.setForeground(Color.DARK_GRAY);
         }
         else
         {
-            obitMiddle.setForeground(Color.DARK_GRAY);
+            obitMiddle.setForeground(Color.red);
         }
         }
         jLayeredPane1.setVisible(toggleVisibility);

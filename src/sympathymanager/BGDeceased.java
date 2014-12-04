@@ -37,16 +37,18 @@ public class BGDeceased implements Deceased
     public BGDeceased( String name )
     {
 
-        String delims = "[, ]";
-        String[] allNames = name.split(delims);
+        String thelastName = name.split(", ")[0];
+      //  String delims = "[, ]";
+        String[] afterComma = name.split(", ")[1].split(" ");
+
         String[]town = name.split("- ");
-        setLName(allNames[0]);
-        setFname(allNames[2]);
-        if ( allNames.length >= 4 )
+        setLName(thelastName);
+        setFname(afterComma[0]);
+        if ( afterComma.length >= 3 )
         {
-            if (allNames[3].length() > 0)
+            if (afterComma[1].length() > 0)
             {
-                setMI(allNames[3].substring(0,1));
+                setMI(afterComma[1].substring(0,1));
             }
         }
         else
