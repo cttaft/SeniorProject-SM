@@ -301,6 +301,27 @@ public class MySqlConnection
         return true;
     }
 
+     public boolean manualSubmit(String id)
+    {
+        try{
+            String submitSQL = "insert into DEATHCHECKER.ConfirmedDead ( MemberId, PictureUrl)"
+        + " values ( ?, ?)";
+            preparedStatement = connect.prepareStatement(submitSQL);
+
+            preparedStatement.setInt(1, Integer.parseInt(id));
+             preparedStatement.setString(2, "http://ak-static.legacy.net/obituaries/images/premiumobit/premiumobit_candle.jpg?v=79.0.0.10421");
+            preparedStatement
+                      .execute();
+
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+
      public boolean revert(String id)
     {
         try{

@@ -185,11 +185,11 @@ public class BGDeceased implements Deceased
     }
     public String toString()
     {
-        if(mInitial!=null && date!=null)
+        if(mInitial!=null && date!=null && !mInitial.equals("-") )
             return String.format("%s %s. %s\n", firstName, mInitial, lastName);
-        else if(date==null && mInitial!=null)
+        else if(date==null && mInitial!=null && !mInitial.equals("-"))
             return String.format("%s %s. %s\n", firstName, mInitial, lastName);
-        else if(date!=null && mInitial == null)
+        else if(date!=null && (mInitial == null || mInitial.equals("-")) )
              return String.format("%s %s\n", firstName,  lastName);
         else
              return String.format("%s %s\n", firstName,  lastName);

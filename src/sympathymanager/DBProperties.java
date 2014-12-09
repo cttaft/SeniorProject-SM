@@ -18,6 +18,7 @@ public class DBProperties {
     private String database;
     private String user;
     private String password;
+    private String url;
 
     public DBProperties()
     {
@@ -40,6 +41,7 @@ public class DBProperties {
 		 database =  prop.getProperty("database");
 		 user =  prop.getProperty("dbuser");
 		 password =  prop.getProperty("dbpassword");
+         url = prop.getProperty("LegacyUrl");
 
 		// save properties to project root folder
 
@@ -66,6 +68,10 @@ public class DBProperties {
     public String getPassword()
     {
         return password;
+    }
+    public String getUrl()
+    {
+        return url;
     }
 
 }

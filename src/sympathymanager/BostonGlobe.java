@@ -27,10 +27,12 @@ public class BostonGlobe implements ConnectToPaper
     private MySqlConnection msc;
     public Connection jsoupConnection()
     {
+         DBProperties properties = new DBProperties();
+         String url = properties.getUrl();
         try
         {
             connect = Jsoup.connect(
-              "http://www.legacy.com/obituaries/bostonglobe/obituary-browse.aspx?recentdate=0&type=1&view=1");
+              url);
             connect.timeout(0);
             doc = connect.get();
         }

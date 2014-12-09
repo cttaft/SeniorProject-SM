@@ -28,6 +28,8 @@ public static void main(String[] args) {
 		prop.setProperty("database", "deathchecker");
 		prop.setProperty("dbuser", "cttaft");
 		prop.setProperty("dbpassword", "thomas22");
+        prop.setProperty("LegacyUrl", "http://www.legacy.com/obituaries/bostonglobe/obituary-browse.aspx?&page=1&entriesperpage=10&view=1&from=scroll&date=pastweek");
+        prop.setProperty("OneDayUrl", "http://www.legacy.com/obituaries/bostonglobe/obituary-browse.aspx?page=1&recentdate=0&type=1&entriesperpage=10&&view=1&from=scroll");
 
 		// save properties to project root folder
 		prop.store(output, null);

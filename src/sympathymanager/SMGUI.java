@@ -11,15 +11,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Desktop;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingWorker;
 
-import com.mysql.jdbc.MySQLConnection;
 import java.net.URI;
 import org.jsoup.*;
 
@@ -52,6 +49,7 @@ public class SMGUI extends javax.swing.JFrame
         SympathyEmails.setVisible(false);
         CancelPayment.setVisible(false);
           Revert.setVisible(false);
+          ManualSubmit.setVisible(false);
         try
         {
             java.net.URL imgURL = new URL(
@@ -109,6 +107,7 @@ public class SMGUI extends javax.swing.JFrame
         CancelPayment = new javax.swing.JButton();
         Revert = new javax.swing.JButton();
         Compare = new javax.swing.JToggleButton();
+        ManualSubmit = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -143,9 +142,9 @@ public class SMGUI extends javax.swing.JFrame
         jProgressBar1.setForeground(new java.awt.Color(51, 204, 0));
         getContentPane().add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 320, 170, -1));
 
-        Title.setFont(new java.awt.Font("Stencil", 0, 24)); // NOI18N
+        Title.setFont(new java.awt.Font("Perpetua Titling MT", 0, 24)); // NOI18N
         Title.setText("Sympathy Manager");
-        getContentPane().add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 260, 34));
+        getContentPane().add(Title, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 270, 34));
 
         jList1.setModel(new javax.swing.AbstractListModel()
             {
@@ -302,6 +301,16 @@ public class SMGUI extends javax.swing.JFrame
             });
             getContentPane().add(Compare, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
+            ManualSubmit.setText("Manual Submit");
+            ManualSubmit.addActionListener(new java.awt.event.ActionListener()
+            {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                {
+                    ManualSubmitActionPerformed(evt);
+                }
+            });
+            getContentPane().add(ManualSubmit, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 260, 130, -1));
+
             pack();
         }// </editor-fold>//GEN-END:initComponents
 
@@ -455,6 +464,7 @@ public class SMGUI extends javax.swing.JFrame
             SympathyEmails.setVisible(true);
         CancelPayment.setVisible(true);
         Revert.setVisible(true);
+        ManualSubmit.setVisible(true);
 
 
             jButton3.setText("Back");
@@ -475,6 +485,7 @@ public class SMGUI extends javax.swing.JFrame
             SympathyEmails.setVisible(false);
         CancelPayment.setVisible(false);
           Revert.setVisible(false);
+             ManualSubmit.setVisible(false);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -556,6 +567,19 @@ public class SMGUI extends javax.swing.JFrame
         jProgressBar1.setVisible(toggleVisibility);
     }//GEN-LAST:event_CompareActionPerformed
 
+    private void ManualSubmitActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ManualSubmitActionPerformed
+    {//GEN-HEADEREND:event_ManualSubmitActionPerformed
+          String memberId = JOptionPane.showInputDialog("Enter MemberId");
+          if (memberId != null)
+          {
+              database.manualSubmit(memberId);
+               database = new MySqlConnection();
+          MgmtList.setListData(database.GetConfirmedList().toArray());
+          }
+
+
+    }//GEN-LAST:event_ManualSubmitActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -617,6 +641,7 @@ public class SMGUI extends javax.swing.JFrame
     private javax.swing.JLabel DatabaseLName;
     private javax.swing.JLabel DbFName;
     private javax.swing.JLabel DbTown;
+    private javax.swing.JButton ManualSubmit;
     private javax.swing.JLayeredPane Mgmt;
     private javax.swing.JList MgmtList;
     private javax.swing.JLabel ObitFname;
